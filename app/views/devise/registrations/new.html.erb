@@ -40,7 +40,7 @@
   <div class="form-group row">
     <%= f.label :state, class:"col-sm-2 col-form-label" %>
     <div class="col-sm-8">
-    <%= f.collection_select(:state, State.all, :id, :name, :prompt => 'Select a State') %>
+    <%= f.collection_select(:state, State.includes(:cities).all, :id, :name, :prompt => 'Select a State') %>
     </div>
   </div>
   
