@@ -1,0 +1,101 @@
+<div class="container">
+<h2>Edit <%= resource_name.to_s.humanize %></h2>
+
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+  <%= render "devise/shared/error_messages", resource: resource %>
+
+  <div class="form-group row">
+    <%= f.label :name,  class:"col-sm-2 col-form-label" %><br />
+    <div class="col-sm-8">
+    <%= f.text_field :name, autofocus: true, class: "form-control" %>
+    </div>
+  </div>
+
+   <div class="form-group row">
+    <%= f.label :email, class:"col-sm-2 col-form-label" %><br />
+    <div class="col-sm-8">
+    <%= f.email_field :email, autofocus: true, autocomplete: "email",class: "form-control" %>
+    </div>
+  </div>
+
+  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+    <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+  <% end %>
+
+  <div class="form-group row">
+    <%= f.label :phone, class:"col-sm-2 col-form-label" %><br />
+    <div class="col-sm-8">
+    <%= f.text_field :phone, autofocus: true,class: "form-control" %>
+    </div>
+  </div>
+
+  <fieldset class="form-group">
+  <div class="row">
+    <%= f.label :Gender,class:"col-sm-2 col-form-label" %>
+    <div class="col-sm-8">
+    <%= f.radio_button(:gender, "male") %>
+    <%= label(:gender, "Male") %>
+    <%= f.radio_button(:gender, "female")%>
+    <%= label(:gender, "Female") %>
+    </div>
+  </div>
+  </fieldset>
+
+  <div class="form-group row">
+    <%= f.label :state, class:"col-sm-2 col-form-label" %>
+    <div class="col-sm-8">
+    <%= f.collection_select(:state, State.all, :id, :name, :prompt => 'Select a State') %>
+    </div>
+  </div>
+  
+  <div class="form-group row">
+    <%= f.label :City,class:"col-sm-2 col-form-label" %>
+     <div class="col-sm-8">
+    <%= f.grouped_collection_select(:city, State.all,:cities,:name,:id, :name, :prompt => 'Select a City') %>
+     </div>
+  </div>
+
+   <div class="form-group row">
+    <div class="col-sm-2 col-form-label">
+    <%= f.label :password %>
+    <% if @minimum_password_length %>
+    <div>
+    <em>(minimum <%= @minimum_password_length %> characters)</em>
+    </div>
+    <% end %>
+    </div>
+    <div class="col-sm-8">
+    <%= f.password_field :password, autocomplete: "new-password", class:"form-control" %>
+    <i>(leave blank if you don't want to change it)</i>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <%= f.label :password_confirmation,class:"col-sm-2 col-form-label" %>
+    <div class="col-sm-8">
+    <%= f.password_field :password_confirmation, autocomplete: "new-password",class:"form-control" %>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <%= f.label :current_password,class:"col-sm-2 col-form-label" %>
+     <div class="col-sm-8">
+    <%= f.password_field :current_password, autocomplete: "current-password",class:"form-control" %>
+    <i>(we need your current password to confirm your changes)</i>
+    </div>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "Update", class:"btn btn-info btn-sm" %>
+  </div>
+<% end %>
+</div>
+<div class="container mt-3">
+<h3>Cancel my account</h3>
+
+<p>Unhappy? 
+<%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete,class:"btn btn-danger btn-sm" %>
+</p>
+
+<%= link_to "Back", :back %>
+</div>

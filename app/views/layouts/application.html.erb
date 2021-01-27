@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Demo</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <%= link_to 'Demo', root_path, class:'navbar-brand' %>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <% if user_signed_in? %>
+       <li class="nav-item active">
+          <%= link_to 'Edit Profile', edit_user_registration_path,class:'nav-link' %>
+      </li>
+      <li class="nav-item active">
+          <%= link_to 'Log out', destroy_user_session_path, method: :delete, class:'nav-link' %> 
+      </li>  
+      <li class="nav-item active">
+        
+      </li>
+      <li class="nav-item active">
+        
+      </li>
+  
+      <li class="nav-item active">
+        
+      </li>
+      <% end %>
+    </ul>
+  </div>
+</nav>
+    <%= yield %>
+  </body>
+</html>
