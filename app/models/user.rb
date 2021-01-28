@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# This model is for users.
 class User < ApplicationRecord
   rolify
   after_create :assign_default_role
@@ -6,6 +9,6 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   def assign_default_role
-    self.add_role(:employee) if self.roles.blank?
+    add_role(:employee) if roles.blank?
   end
 end
