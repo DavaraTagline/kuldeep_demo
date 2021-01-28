@@ -42,16 +42,16 @@
   </fieldset>
 
   <div class="form-group row">
-    <%= f.label :state, class:"col-sm-2 col-form-label" %>
+    <%= f.label :state_id, class:"col-sm-2 col-form-label" %>
     <div class="col-sm-8">
-    <%= f.collection_select(:state, State.includes(:cities).all, :id, :name, :prompt => 'Select a State') %>
+    <%= f.collection_select(:state_id, State.includes(:cities).all, :id, :name, :prompt => 'Select a State') %>
     </div>
   </div>
   
   <div class="form-group row">
-    <%= f.label :City,class:"col-sm-2 col-form-label" %>
+    <%= f.label :city_id,class:"col-sm-2 col-form-label" %>
      <div class="col-sm-8">
-    <%= f.grouped_collection_select(:city, State.all,:cities,:name,:id, :name, :prompt => 'Select a City') %>
+    <%= f.grouped_collection_select(:city_id, State.all,:cities,:name,:id, :name, :prompt => 'Select a City') %>
      </div>
   </div>
 

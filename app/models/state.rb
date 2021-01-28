@@ -3,4 +3,5 @@
 # This model used to store state in Database.
 class State < ApplicationRecord
   has_many :cities
+  has_many :users
 end

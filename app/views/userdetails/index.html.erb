@@ -18,11 +18,11 @@
       <tr>
         <td><%= user.id %></td>
         <td><%= user.name %></td>
-        <td><%= user.email%></td>
-        <td><%= user.phone%></td>
-        <td><%= user.gender%></td>
-        <td><%= State.find_by("id = ?",user.state).name%></td>
-        <td><%= City.find_by("id = ?",user.city).name%></td>
+        <td><%= user.email %></td>
+        <td><%= user.phone %></td>
+        <td><%= user.gender %></td>
+        <td><%= user.state.name %></td>
+        <td><%= user.city.name %></td>
       </tr>
     <% end %>
   </tbody>
