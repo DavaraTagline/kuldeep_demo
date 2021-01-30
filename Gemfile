@@ -27,6 +27,7 @@ gem 'bullet'
 gem 'devise'
 gem 'rolify'
 gem 'rubocop', require: false
+gem 'cancancan'
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 
