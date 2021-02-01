@@ -78,21 +78,21 @@
 <% end %>
 <%# render "devise/shared/links" %>
 </div>
+
 <script type="text/javascript">
-// $(document).on("change", "#user_state ", function(){
-//    var country = $(this).val();
-//    console.log(country)
-//   // $.ajax({
-//   //   url: "/users/new",
-//   //   method: "GET",  
-//   //   dataType: "json",
-//   //   data: {country: country},
-//   //   error: function (xhr, status, error) {
-//   //     console.error('AJAX Error: ' + status + error);
-//   //   },
-//   //   success: function (response) {
-//   //     console.log(response);
-//   //   }
-//   // });
-// });
+city = $('#user_city_id').html()
+$('#user_state_id').on('change',function(){
+    state = $('#user_state_id :selected').text()
+    //console.log(state)
+    options = $(city).filter("optgroup[label="+ state +"]").html()
+    //console.log(options)
+    if (options){
+      $('#user_city_id').html(options)
+      $('#user_city_id').parent().show()
+    }
+    else {
+      $('#user_city_id').empty()
+      $('user_city_id').parent().hide()
+    }
+});
 </script>
