@@ -10,3 +10,5 @@ user1 = User.create(name:'kevin',email:'superadmin@gmail.com',phone:'9875648561'
 user1.add_role :superadmin
 user2 = User.create(name:'pradip',email:'admin@gmail.com',phone:'9875689898',gender:'male',state_id: '1', city_id:'2', password:'admin123',password_confirmation:'admin123')
 user2.add_role :admin
+user3 = User.create(name:'kuldeep',email:'employee@gmail.com',phone:'9812189898',gender:'male',state_id: '1', city_id:'1', password:'employee123',password_confirmation:'employee123')
+user3.add_role :employee
