@@ -40,15 +40,15 @@
   <div class="form-group row">
     <%= f.label :state_id, class:"col-sm-2 col-form-label" %>
     <div class="col-sm-8">
-    <%= f.collection_select(:state_id, State.includes(:cities).all, :id, :name, :prompt => 'Select a State') %>
+      <%= f.collection_select(:state_id, State.all, :id, :name, :prompt => 'Select a State') %>
     </div>
   </div>
   
   <div class="form-group row">
     <%= f.label :city_id,class:"col-sm-2 col-form-label" %>
-     <div class="col-sm-8">
-    <%= f.grouped_collection_select(:city_id, State.all,:cities,:name,:id, :name, :prompt => 'Select a City') %>
-     </div>
+    <div class="col-sm-8">
+      <%= f.select(:city_id,  {prompt: "Select a City"}) %>
+    </div>
   </div>
 
   <div class="form-group row">
@@ -80,19 +80,27 @@
 </div>
 
 <script type="text/javascript">
-city = $('#user_city_id').html()
-$('#user_state_id').on('change',function(){
-    state = $('#user_state_id :selected').text()
-    //console.log(state)
-    options = $(city).filter("optgroup[label="+ state +"]").html()
-    //console.log(options)
-    if (options){
-      $('#user_city_id').html(options)
-      $('#user_city_id').parent().show()
+  $(document).on("change", "#user_state_id", function(){
+  var state = $(this).val();
+  console.log(state)
+  $.ajax({
+    url: "/cities",
+    method: "GET",  
+    dataType: "json",
+    data: {state: state},
+    error: function (xhr, status, error) {
+      console.error('AJAX Error: ' + status + error);
+    },
+    success: function (response) {
+      console.log(response);
+      var cities = response["cities"];
+      $("#user_city_id").empty();
+
+      $("#user_city_id").append('<option>Select city</option>');
+      for(var i=0; i< cities.length; i++){
+        $("#user_city_id").append('<option value="' + cities[i]["id"] + '">' + cities[i]["name"] + '</option>');
+      }
     }
-    else {
-      $('#user_city_id').empty()
-      $('user_city_id').parent().hide()
-    }
+  });
 });
 </script>
