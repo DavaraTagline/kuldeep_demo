@@ -11,6 +11,18 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   def assign_default_role
-    add_role(:employee) if roles.blank?
+    self.add_role(:employee) if self.roles.blank?
+  end
+  
+  def admin?
+    has_role?(:admin)
+  end
+  
+  def employee?
+    has_role?(:employee)
+  end 
+
+  def superadmin?
+    has_role?(:superadmin)
   end
 end
