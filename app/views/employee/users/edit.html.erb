@@ -1,0 +1,56 @@
+<div class="container mt-3">
+<h2>Edit User</h2>
+<%= form_with model: @user, url: employee_user_path(@user), method: 'patch' do |f| %>
+<div class="form-group row">
+    <%= f.label :name,  class:"col-sm-2 col-form-label" %><br />
+    <div class="col-sm-8">
+    <%= f.text_field :name, autofocus: true, class: "form-control" %>
+    </div>
+  </div>
+
+   <div class="form-group row">
+    <%= f.label :email, class:"col-sm-2 col-form-label" %><br />
+    <div class="col-sm-8">
+    <%= f.email_field :email, autofocus: true, autocomplete: "email",class: "form-control" %>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <%= f.label :phone, class:"col-sm-2 col-form-label" %><br />
+    <div class="col-sm-8">
+    <%= f.text_field :phone, autofocus: true,class: "form-control" %>
+    </div>
+  </div>
+
+  <fieldset class="form-group">
+  <div class="row">
+    <%= f.label :Gender,class:"col-sm-2 col-form-label" %>
+    <div class="col-sm-8">
+    <%= f.radio_button(:gender, "male") %>
+    <%= label(:gender, "Male") %>
+    <%= f.radio_button(:gender, "female")%>
+    <%= label(:gender, "Female") %>
+    </div>
+  </div>
+  </fieldset>
+
+  <div class="form-group row">
+    <%= f.label :state_id, class:"col-sm-2 col-form-label" %>
+    <div class="col-sm-8">
+    <%= f.collection_select(:state_id, State.includes(:cities).all, :id, :name, :prompt => 'Select a State') %>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <%= f.label :city_id,class:"col-sm-2 col-form-label" %>
+     <div class="col-sm-8">
+    <%= f.grouped_collection_select(:city_id, State.all,:cities,:name,:id, :name, :prompt => 'Select a City') %>
+     </div>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "Update", class:"btn btn-info btn-sm" %>
+  </div>
+<% end %>
+<%= link_to 'Back', employee_users_path%>
+</div> 

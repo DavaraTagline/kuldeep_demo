@@ -6,6 +6,8 @@ class User < ApplicationRecord
   after_create :assign_default_role
   belongs_to :city
   belongs_to :state
+  scope :get_susers, -> {where(roles:{name:["employee","admin"]})}
+  scope :get_ausers, -> {where(roles: {name:"employee"})}
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
