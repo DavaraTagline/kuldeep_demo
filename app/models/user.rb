@@ -3,26 +3,26 @@
 # This model is for users.
 class User < ApplicationRecord
   rolify
-  after_create :assign_default_role
-  belongs_to :city
-  belongs_to :state
-  scope :get_susers, -> {where(roles:{name:["employee","admin"]})}
-  scope :get_ausers, -> {where(roles: {name:"employee"})}
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
+  belongs_to :city
+  belongs_to :state
+  scope :get_all_users, -> { where(roles: { name: %w[employee admin] }) }
+  scope :get_admin_users, -> { where(roles: { name: 'employee' }) }
+  after_create :assign_default_role
   def assign_default_role
-    self.add_role(:employee) if self.roles.blank?
+    add_role(:employee) if roles.blank?
   end
-  
+
   def admin?
     has_role?(:admin)
   end
-  
+
   def employee?
     has_role?(:employee)
-  end 
+  end
 
   def superadmin?
     has_role?(:superadmin)

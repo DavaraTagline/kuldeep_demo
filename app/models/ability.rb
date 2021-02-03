@@ -1,25 +1,27 @@
 # frozen_string_literal: true
 
+# This class is for authorization of user
 class Ability
   include CanCan::Ability
 
   def initialize(user)
     # Define abilities for the passed in user here. For example:
-    
-      user ||= User.new # guest user (not logged in)
-      if user.superadmin?
-        can :manage, :all
-      elsif user.employee?
-        can :manage, User, id: user.id
-      elsif user.admin?
+
+    user ||= User.new # guest user (not logged in)
+    if user.superadmin?
+      can :manage, :all
+    elsif user.employee?
+      can :manage, User, id: user.id
+    elsif user.admin?
+      if user.has_role?(:employee) || user.has_role?(:admin)
         can :manage, User do |u|
-          u.roles.where(name: 'employee') 
-        end if user.has_role?(:employee) || user.has_role?(:admin)
-        # can :manage, User.joins(:roles).where(roles: {name: ["employee", "admin"]}) #if user.has_role?(:employee) || user.has_role?(:admin)
-      else
-        can :read, :all 
+          u.roles.where(name: 'employee')
+        end
       end
-    
+    else
+      can :read, :all
+    end
+
     # The first argument to `can` is the action you are giving the user
     # permission to do.
     # If you pass :manage it will apply to every action. Other common actions

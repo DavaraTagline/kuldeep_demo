@@ -18,12 +18,11 @@ class UserController < ApplicationController
 
   def update
     @user = User.find(params[:id])
-    if @user.update(params.require(:user).permit(:name,:email,:phone,:gender,:state_id,:city_id))
-      redirect_to user_index_path, notice: "updated succesfully"
+    if @user.update(params.require(:user).permit(:name, :email, :phone, :gender, :state_id, :city_id))
+      redirect_to user_index_path, notice: 'updated succesfully'
     else
       render :edit
     end
-
   end
 
   def destroy
@@ -31,5 +30,4 @@ class UserController < ApplicationController
     @user.destroy
     redirect_to user_index_path
   end
-
 end

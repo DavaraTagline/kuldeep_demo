@@ -1,0 +1,76 @@
+<div class="container">
+<h2>Create New</h2>
+<%= form_with model: @user, url: admin_users_path do |f| %>
+  <div class="form-group row">
+    <%= f.label :name,  class:"col-sm-2 col-form-label" %><br />
+    <div class="col-sm-8">
+    <%= f.text_field :name, autofocus: true, class: "form-control" %>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <%= f.label :email, class:"col-sm-2 col-form-label" %><br />
+    <div class="col-sm-8">
+    <%= f.email_field :email, autofocus: true, autocomplete: "email",class: "form-control" %>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <%= f.label :phone, class:"col-sm-2 col-form-label" %><br />
+    <div class="col-sm-8">
+    <%= f.text_field :phone, autofocus: true,class: "form-control" %>
+    </div>
+  </div>
+
+  <fieldset class="form-group">
+  <div class="row">
+    <%= f.label :Gender,class:"col-sm-2 col-form-label" %>
+    <div class="col-sm-8">
+    <%= f.radio_button(:gender, "male") %>
+    <%= label(:gender, "Male") %>
+    <%= f.radio_button(:gender, "female")%>
+    <%= label(:gender, "Female") %>
+    </div>
+  </div>
+  </fieldset>
+
+  <div class="form-group row">
+    <%= f.label :state_id, class:"col-sm-2 col-form-label" %>
+    <div class="col-sm-8">
+    <%= f.collection_select(:state_id, State.includes(:cities).all, :id, :name, :prompt => 'Select a State') %>
+    </div>
+  </div>
+  
+  <div class="form-group row">
+    <%= f.label :city_id,class:"col-sm-2 col-form-label" %>
+     <div class="col-sm-8">
+    <%= f.grouped_collection_select(:city_id, State.all,:cities,:name,:id, :name, :prompt => 'Select a City') %>
+     </div>
+  </div>
+  <div class="form-group row">
+    <div class="col-sm-2 col-form-label">
+    <%= f.label :password %>
+    <% if @minimum_password_length %>
+    <div>
+    <em>(minimum <%= @minimum_password_length %> characters)</em>
+    </div>
+    <% end %>
+    </div>
+    <div class="col-sm-8">
+    <%= f.password_field :password, autocomplete: "new-password", class:"form-control" %>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <%= f.label :password_confirmation,class:"col-sm-2 col-form-label" %><br />
+    <div class="col-sm-8">
+    <%= f.password_field :password_confirmation, autocomplete: "new-password", class:"form-control" %>
+    </div>
+  </div>
+  
+  <div class="actions">
+    <%= f.submit "add new",class:"btn btn-primary btn-sm" %><br/>
+  </div>
+<% end %>
+<%= link_to 'Back', admin_users_path%>
+</div>
