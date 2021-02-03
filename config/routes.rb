@@ -5,9 +5,7 @@ Rails.application.routes.draw do
   devise_for :users
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   root 'home#index'
-<<<<<<< HEAD
   get '/cities', to: 'home#index'
-=======
   namespace :admin do 
     resources :users
   end
@@ -19,5 +17,4 @@ Rails.application.routes.draw do
   namespace :superadmin do
     resources :users
   end
->>>>>>> 29ccb29 (namespace_controller_and_routes_added)
 end
