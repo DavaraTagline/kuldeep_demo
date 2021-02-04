@@ -47,7 +47,7 @@
   <div class="form-group row">
     <%= f.label :city_id,class:"col-sm-2 col-form-label" %>
     <div class="col-sm-8">
-      <%= f.select(:city_id,  {prompt: "Select a City"}) %>
+      <%= f.select(:city_id, @cities = [] , {prompt: "Select a City"}) %>
     </div>
   </div>
 

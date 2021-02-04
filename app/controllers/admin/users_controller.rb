@@ -5,7 +5,7 @@ module Admin
   class UsersController < ApplicationController
     before_action :authenticate_user!
     before_action :set_admin_user, only: %i[show edit update destroy]
-    load_and_authorize_resource except: :create
+    load_and_authorize_resource param_method: :admin_params
     def index
       @users = User.includes(:state, :city, :roles).employee_users
     end
