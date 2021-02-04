@@ -4,10 +4,10 @@
 module Superadmin
   # This controller is for SuperadminUser
   class UsersController < ApplicationController
-    before_action :authenticate_user!, only: %i[index show edit update destroy]
-    before_action :superadmin_user, only: %i[show edit update destroy]
+    before_action :authenticate_user!, except: %i[new create]
+    before_action :set_superadmin_user, only: %i[show edit update destroy]
     def index
-      @users = User.includes(:state, :city, :roles).get_all_users
+      @users = User.includes(:state, :city, :roles).employee_and_admin_users
     end
 
     def show; end
@@ -17,9 +17,8 @@ module Superadmin
     end
 
     def create
-      @user = User.new(params.require(:user).permit(:name, :email, :phone, :gender, :state_id, :city_id, :password,
-                                                    :password_confirmation))
-      puts @user.inspect
+      @user = User.new(superadmin_params)
+      @user.add_role params[:user][:role_id]
       if @user.save
         redirect_to superadmin_users_path
       else
@@ -45,10 +44,15 @@ module Superadmin
     private
 
     def superadmin_params
-      params.require(:user).permit(:name, :email, :phone, :gender, :state_id, :city_id)
+      if params[:commit] == 'Update'
+        params.require(:user).permit(:name, :email, :phone, :gender, :state_id, :city_id)
+      else
+        params.require(:user).permit(:name, :email, :phone, :gender, :state_id, :city_id, :password,
+                                     :password_confirmation)
+      end
     end
 
-    def superadmin_user
+    def set_superadmin_user
       @user = User.find(params[:id])
     end
   end

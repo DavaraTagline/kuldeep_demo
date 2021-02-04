@@ -4,8 +4,8 @@
 module Employee
   # This controller is for EmployeeUser
   class UsersController < ApplicationController
-    before_action :authenticate_user!, only: %i[index show edit update destroy]
-    before_action :employee_user, only: %i[show edit update destroy]
+    before_action :authenticate_user!, except: %i[new create]
+    before_action :set_employee_user, only: %i[show edit update destroy]
     def index
       @user = current_user
     end
@@ -33,7 +33,7 @@ module Employee
       params.require(:user).permit(:name, :email, :phone, :gender, :state_id, :city_id)
     end
 
-    def employee_user
+    def set_employee_user
       @user = User.find(params[:id])
     end
   end

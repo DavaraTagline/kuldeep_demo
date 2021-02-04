@@ -3,10 +3,10 @@
 module Admin
   # This controller is for AdminUser
   class UsersController < ApplicationController
-    before_action :authenticate_user!, only: %i[index show edit update destroy]
-    before_action :admin_user, only: %i[show edit update destroy]
+    before_action :authenticate_user!, except: %i[new create]
+    before_action :set_admin_user, only: %i[show edit update destroy]
     def index
-      @users = User.includes(:state, :city, :roles).get_admin_users
+      @users = User.includes(:state, :city, :roles).employee_users
     end
 
     def show; end
@@ -16,9 +16,8 @@ module Admin
     end
 
     def create
-      @user = User.new(params.require(:user).permit(:name, :email, :phone, :gender, :state_id, :city_id, :password,
-                                                    :password_confirmation))
-      puts @user.inspect
+      @user = User.new(admin_params)
+      @user.add_role :employee
       if @user.save
         redirect_to admin_users_path
       else
@@ -44,10 +43,15 @@ module Admin
     private
 
     def admin_params
-      params.require(:user).permit(:name, :email, :phone, :gender, :state_id, :city_id)
+      if params[:commit] == 'Update'
+        params.require(:user).permit(:name, :email, :phone, :gender, :state_id, :city_id)
+      else
+        params.require(:user).permit(:name, :email, :phone, :gender, :state_id, :city_id, :password,
+                                     :password_confirmation)
+      end
     end
 
-    def admin_user
+    def set_admin_user
       @user = User.find(params[:id])
     end
   end

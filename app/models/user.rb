@@ -9,12 +9,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
   belongs_to :city
   belongs_to :state
-  scope :get_all_users, -> { where(roles: { name: %w[employee admin] }) }
-  scope :get_admin_users, -> { where(roles: { name: 'employee' }) }
-  after_create :assign_default_role
-  def assign_default_role
-    add_role(:employee) if roles.blank?
-  end
+  scope :employee_and_admin_users, -> { where(roles: { name: %w[employee admin] }) }
+  scope :employee_users, -> { where(roles: { name: 'employee' }) }
 
   def admin?
     has_role?(:admin)
