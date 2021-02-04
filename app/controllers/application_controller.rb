@@ -3,8 +3,16 @@
 # This controller is main controller of application
 class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
+  # protect_from_forgery
+  # protect_from_forgery with: :exception
   rescue_from CanCan::AccessDenied do |exception|
-    redirect_to user_index_url, notice: exception.message
+    if current_user.has_role? :admin
+      redirect_to admin_users_url, notice: exception.message
+    elsif current_user.has_role? :employee
+      redirect_to employee_users_url, notice: exception.message
+    else
+      redirect_to root_url, notice: exception.message
+    end
   end
 
   def after_sign_in_path_for(_resource)

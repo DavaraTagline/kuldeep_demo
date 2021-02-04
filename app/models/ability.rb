@@ -9,17 +9,13 @@ class Ability
 
     user ||= User.new # guest user (not logged in)
     if user.superadmin?
-      can :manage, :all
+      can :manage, User
     elsif user.employee?
-      can :manage, User, id: user.id
+      can [:read,:update], User, id: user.id
     elsif user.admin?
-      if user.has_role?(:employee) || user.has_role?(:admin)
-        can :manage, User do |u|
-          u.roles.where(name: 'employee')
-        end
-      end
+      can [:create, :read, :update], User
     else
-      can :read, :all
+      cannot :manage, :all
     end
 
     # The first argument to `can` is the action you are giving the user

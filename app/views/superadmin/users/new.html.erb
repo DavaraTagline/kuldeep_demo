@@ -1,4 +1,17 @@
 <div class="container">
+<% if @user.errors.any? %>
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <h4 class="alert-heading">Something went wrong!</h4>
+    <ul>
+    <% @user.errors.full_messages.each do |msg| %>
+       <li><%= msg %></li>
+    <% end %>
+    </ul>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<% end %>
 <h2>Create New</h2>
 <%= form_with model: @user, url: superadmin_users_path(@user) do |f| %>
   <div class="form-group row">
@@ -49,9 +62,9 @@
   </div>
   
   <div class="form-group row">
-    <%= f.label :role_id, class:"col-sm-2 col-form-label" %>
+    <%= f.label :role, class:"col-sm-2 col-form-label" %>
     <div class="col-sm-8">
-    <%= f.collection_select(:role_id, Role.all, :name, :name, :prompt => 'Select a Role') %>
+    <%= f.collection_select(:role, Role.all, :name, :name, :prompt => 'Select a Role') %>
     </div>
   </div>
 

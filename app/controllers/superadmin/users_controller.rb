@@ -4,8 +4,9 @@
 module Superadmin
   # This controller is for SuperadminUser
   class UsersController < ApplicationController
-    before_action :authenticate_user!, except: %i[new create]
+    before_action :authenticate_user!
     before_action :set_superadmin_user, only: %i[show edit update destroy]
+    load_and_authorize_resource except: :create
     def index
       @users = User.includes(:state, :city, :roles).employee_and_admin_users
     end
@@ -18,8 +19,8 @@ module Superadmin
 
     def create
       @user = User.new(superadmin_params)
-      @user.add_role params[:user][:role_id]
       if @user.save
+        @user.add_role params.dig('user', 'role')
         redirect_to superadmin_users_path
       else
         render :new
@@ -44,11 +45,11 @@ module Superadmin
     private
 
     def superadmin_params
-      if params[:commit] == 'Update'
-        params.require(:user).permit(:name, :email, :phone, :gender, :state_id, :city_id)
-      else
-        params.require(:user).permit(:name, :email, :phone, :gender, :state_id, :city_id, :password,
-                                     :password_confirmation)
+      base_params = params.require(:user).permit(:name, :email, :phone, :gender, :state_id, :city_id)
+      unless action_name == 'update'
+        password = params.dig('user', 'password')
+        password_confirmation = params.dig('user', 'password_confirmation')
+        base_params.merge(password: password, password_confirmation: password_confirmation)
       end
     end
 

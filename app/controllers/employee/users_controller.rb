@@ -4,8 +4,9 @@
 module Employee
   # This controller is for EmployeeUser
   class UsersController < ApplicationController
-    before_action :authenticate_user!, except: %i[new create]
+    before_action :authenticate_user!
     before_action :set_employee_user, only: %i[show edit update destroy]
+    load_and_authorize_resource
     def index
       @user = current_user
     end
