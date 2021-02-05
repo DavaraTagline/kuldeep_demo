@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
     if current_user.has_role? :admin
       redirect_to admin_users_url, notice: exception.message
     elsif current_user.has_role? :employee
-      redirect_to employee_users_url, notice: exception.message
+      redirect_to employee_user_url, notice: exception.message
     else
       redirect_to root_url, notice: exception.message
     end
@@ -19,7 +19,7 @@ class ApplicationController < ActionController::Base
     elsif resource.has_role?(:superadmin)
       superadmin_users_path
     elsif resource.has_role?(:employee)
-      employee_users_path
+      employee_user_path(@user)
     else
       root_path
     end

@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   end
 
   namespace :employee do
-    resources :users
+    resources :users, only: %i[show]
   end
 
   namespace :superadmin do

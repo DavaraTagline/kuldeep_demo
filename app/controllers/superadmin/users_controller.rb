@@ -5,6 +5,7 @@ module Superadmin
   # This controller is for SuperadminUser
   class UsersController < ApplicationController
     before_action :authenticate_user!
+    before_action :restrict_user
     before_action :set_superadmin_user, only: %i[show edit update destroy]
     load_and_authorize_resource param_method: :superadmin_params
     def index
@@ -50,6 +51,20 @@ module Superadmin
         password = params.dig('user', 'password')
         password_confirmation = params.dig('user', 'password_confirmation')
         base_params.merge(password: password, password_confirmation: password_confirmation)
+      else
+        base_params
+      end
+    end
+
+    def restrict_user
+      unless current_user.has_role? :superadmin
+        if current_user.has_role? :admin
+          redirect_to admin_users_path, notice: 'You are not allowed!'
+        elsif current_user.has_role? :employee
+          redirect_to employee_user_path(current_user)
+        else
+          redirect_to root_path
+        end
       end
     end
 

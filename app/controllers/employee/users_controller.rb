@@ -5,33 +5,24 @@ module Employee
   # This controller is for EmployeeUser
   class UsersController < ApplicationController
     before_action :authenticate_user!
-    before_action :set_employee_user, only: %i[show edit update destroy]
+    before_action :restrict_user
+    before_action :set_employee_user, only: %i[show]
     load_and_authorize_resource
-    def index
-      @user = current_user
-    end
 
     def show; end
 
-    def edit; end
-
-    def update
-      if @user.update(employee_params)
-        redirect_to employee_users_path, notice: 'updated succesfully'
-      else
-        render :edit
-      end
-    end
-
-    def destroy
-      @user.destroy
-      redirect_to employee_users_path
-    end
-
     private
 
-    def employee_params
-      params.require(:user).permit(:name, :email, :phone, :gender, :state_id, :city_id)
+    def restrict_user
+      unless current_user.has_role? :employee
+        if current_user.has_role? :superadmin
+          redirect_to superadmin_users_path, notice: 'You are not allowed!'
+        elsif current_user.has_role? :admin
+          redirect_to admin_users_path, notice: 'You are not allowed!'
+        else
+          redirect_to root_path
+        end
+      end
     end
 
     def set_employee_user

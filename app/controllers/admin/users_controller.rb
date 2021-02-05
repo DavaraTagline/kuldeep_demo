@@ -5,6 +5,7 @@ module Admin
   class UsersController < ApplicationController
     before_action :authenticate_user!
     before_action :set_admin_user, only: %i[show edit update destroy]
+    before_action :restrict_user
     load_and_authorize_resource param_method: :admin_params
     def index
       @users = User.includes(:state, :city, :roles).employee_users
@@ -49,6 +50,20 @@ module Admin
         password = params.dig('user', 'password')
         password_confirmation = params.dig('user', 'password_confirmation')
         base_params.merge(password: password, password_confirmation: password_confirmation)
+      else
+        base_params
+      end
+    end
+
+    def restrict_user
+      unless current_user.has_role? :admin
+        if current_user.has_role? :superadmin
+          redirect_to superadmin_users_path, notice: 'You are not allowed!'
+        elsif current_user.has_role? :employee
+          redirect_to employee_user_path(current_user)
+        else
+          redirect_to root_path
+        end
       end
     end
 

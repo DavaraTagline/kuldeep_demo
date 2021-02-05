@@ -64,7 +64,7 @@
   <div class="form-group row">
     <%= f.label :role, class:"col-sm-2 col-form-label" %>
     <div class="col-sm-8">
-    <%= f.collection_select(:role, Role.all, :name, :name, :prompt => 'Select a Role') %>
+    <%= f.collection_select(:role, Role.where.not(name:"superadmin"), :name, :name, :prompt => 'Select a Role') %>
     </div>
   </div>
 
