@@ -24,10 +24,10 @@ gem 'jbuilder', '~> 2.7'
 # Use Active Model has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 gem 'bullet'
+gem 'cancancan'
 gem 'devise'
 gem 'rolify'
 gem 'rubocop', require: false
-gem 'cancancan'
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 

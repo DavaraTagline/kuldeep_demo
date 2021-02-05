@@ -1,7 +1,7 @@
 <div class="container mt-3">
 <h2>Edit User</h2>
-<%= form_with model: @user, url: user_path(@user), method: 'patch' do |f| %>
-<div class="form-group row">
+<%= form_with model: @user, url: admin_user_path(@user), method: 'patch' do |f| %>
+  <div class="form-group row">
     <%= f.label :name,  class:"col-sm-2 col-form-label" %><br />
     <div class="col-sm-8">
     <%= f.text_field :name, autofocus: true, class: "form-control" %>
@@ -40,7 +40,7 @@
     <%= f.collection_select(:state_id, State.includes(:cities).all, :id, :name, :prompt => 'Select a State') %>
     </div>
   </div>
-  
+
   <div class="form-group row">
     <%= f.label :city_id,class:"col-sm-2 col-form-label" %>
      <div class="col-sm-8">
@@ -52,5 +52,5 @@
     <%= f.submit "Update", class:"btn btn-info btn-sm" %>
   </div>
 <% end %>
-<%= link_to 'Back', user_index_path%>
-</div>
+<%= link_to 'Back', admin_users_path%>
+</div> 
