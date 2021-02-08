@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -51,6 +53,7 @@ ActiveRecord::Schema.define(version: 20_210_212_125_143) do
     t.index %w[blob_id variation_digest], name: 'index_active_storage_variant_records_uniqueness', unique: true
   end
 
+ActiveRecord::Schema.define(version: 20_210_206_043_321) do
   create_table 'addresses', force: :cascade do |t|
     t.integer 'company_id', null: false
     t.text 'address'
@@ -119,9 +122,12 @@ ActiveRecord::Schema.define(version: 20_210_212_125_143) do
     t.index ['user_id'], name: 'index_users_roles_on_user_id'
   end
 
+<<<<<<< HEAD
   add_foreign_key 'accountdetails', 'users'
   add_foreign_key 'active_storage_attachments', 'active_storage_blobs', column: 'blob_id'
   add_foreign_key 'active_storage_variant_records', 'active_storage_blobs', column: 'blob_id'
+=======
+>>>>>>> 8724b82 (company and address model added)
   add_foreign_key 'addresses', 'companies'
   add_foreign_key 'cities', 'states'
   add_foreign_key 'users', 'cities'

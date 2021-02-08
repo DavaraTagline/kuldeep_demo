@@ -11,6 +11,7 @@ class Ability
     if user.superadmin?
       can :manage, User
       can :manage, Accountdetail
+      can :manage, Company
     elsif user.employee?
       can [:read], User, id: user.id
       can %i[read update create], Accountdetail

@@ -1,0 +1,55 @@
+<div class="container">
+  <h2>Create New</h2>
+  <%= form_with model: @company, url: superadmin_companies_path do |f| %>
+    <div class="form-group row">
+      <%= f.label :name, class:"col-sm-2 col-form-label" %><br />
+        <div class="col-sm-8">
+          <%= f.text_field :name, autofocus: true, class: "form-control" %>
+        </div>
+    </div>
+
+    <div class="form-group row">
+      <%= f.label :email, class:"col-sm-2 col-form-label" %><br />
+        <div class="col-sm-8">
+          <%= f.email_field :email, autofocus: true, autocomplete: "email" ,class: "form-control" %>
+        </div>
+    </div>
+
+    <div class="form-group row">
+      <%= f.label :website, class:"col-sm-2 col-form-label" %><br />
+        <div class="col-sm-8">
+          <%= f.url_field :website, autofocus: true, class: "form-control" %>
+        </div>
+    </div>
+
+    <div class="form-group row">
+      <%= f.label :address, class:"col-sm-2 col-form-label" %><br />
+        <div class="col-sm-7 ab">
+          <%= f.fields_for :addresses do |builder| %>
+            <%= render 'address' , f: builder %>
+              <% end %>
+        </div>
+        <div class="col-sm-3">
+          <%= link_to_add_new('Add', f, :addresses, class:'btn btn-primary add') %>
+        </div>
+    </div>
+    <div class="actions">
+      <%= f.submit "add new" ,class:"btn btn-primary btn-sm" %><br />
+    </div>
+    <% end %>
+      <%= link_to 'Back' , superadmin_users_path%>
+</div>
+
+<script type="text/javascript">
+  $(document).on('turbolinks:load', function () {
+    $('form').on('click', '.add', function (event) {
+      var regexp, time;
+      time = new Date().getTime();
+      regexp = new RegExp($(this).data('id'), 'g');
+      $('.ab').append($(this).data('fields').replace(regexp, time));
+      $('.ab').append("<br/>")
+      return event.preventDefault();
+    });
+
+  });
+</script>
