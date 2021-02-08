@@ -8,3 +8,10 @@ require("turbolinks").start()
 require("@rails/activestorage").start()
 require("channels")
 require("jquery")
+require("@nathanvda/cocoon")
+
+$(document).on('turbolinks:load',function() {
+    $(".add").
+    data("association-insertion-method", 'append').
+    data("association-insertion-node", '.ab');
+});

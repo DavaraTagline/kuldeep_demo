@@ -28,6 +28,7 @@ gem 'cancancan'
 gem 'devise'
 gem 'rolify'
 gem 'rubocop', require: false
+gem 'cocoon'
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 
