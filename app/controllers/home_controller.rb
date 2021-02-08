@@ -3,8 +3,8 @@
 # This controller is help to render home page
 class HomeController < ApplicationController
   def index
-    @cities = if params[:state].present?
-                State.find(params[:state]).cities
+    @cities = if params[:state_id].present?
+                State.find(params[:state_id]).cities
               else
                 []
               end

@@ -45,7 +45,10 @@
     $('form').on('click', '.add', function (event) {
       var regexp, time;
       time = new Date().getTime();
+      console.log(time)
       regexp = new RegExp($(this).data('id'), 'g');
+      console.log($(this).data('id'))
+      console.log(regexp)
       $('.ab').append($(this).data('fields').replace(regexp, time));
       $('.ab').append("<br/>")
       return event.preventDefault();
