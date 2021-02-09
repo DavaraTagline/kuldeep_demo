@@ -25,10 +25,10 @@ gem 'jbuilder', '~> 2.7'
 # gem 'bcrypt', '~> 3.1.7'
 gem 'bullet'
 gem 'cancancan'
+gem 'cocoon'
 gem 'devise'
 gem 'rolify'
 gem 'rubocop', require: false
-gem 'cocoon'
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 

@@ -2,7 +2,8 @@
 
 module Superadmin
   class CompaniesController < ApplicationController
-    before_action :set_company, only: %i[show edit update]
+    before_action :set_company, only: %i[show edit update destroy]
+    load_and_authorize_resource
     def index
       @companies = Company.all
     end
@@ -31,6 +32,11 @@ module Superadmin
       else
         render :edit
       end
+    end
+
+    def destroy
+      @company.destroy
+      redirect_to superadmin_companies_path
     end
 
     private

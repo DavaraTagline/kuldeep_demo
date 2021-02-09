@@ -19,8 +19,9 @@
         <td><%= c.name %></td>
         <td><%= c.email %></td>
         <td><%= c.website %></td>
-        <td><%= link_to 'show',superadmin_company_path(c) %></td>
+        <td><%= link_to 'Show',superadmin_company_path(c) %></td>
         <td><%= link_to 'Edit',edit_superadmin_company_path(c) %></td>
+        <td><%= link_to 'Destroy',superadmin_company_path(c), method: :delete, data: { confirm: 'Are you sure?'} %></td>
       </tr>
     <% end %>
   </tbody>
