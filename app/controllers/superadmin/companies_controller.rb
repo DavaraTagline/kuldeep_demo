@@ -4,6 +4,14 @@ module Superadmin
   class CompaniesController < ApplicationController
     before_action :set_company, only: %i[show edit update destroy]
     load_and_authorize_resource
+    def get_address(obj)
+      @add = []
+       obj.each do |a|
+         @add << a.address
+      end
+      return @add.join(",")
+    end
+    helper_method :get_address
     def index
       @companies = Company.all
     end
