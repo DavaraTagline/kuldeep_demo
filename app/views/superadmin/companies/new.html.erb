@@ -1,7 +1,5 @@
 <div class="container">
   <h2>Create New</h2>
-  <%= form_with model: @company, url: superadmin_companies_path do |f| %>
-    <%= render "superadmin/companies/form", f: f %> 
-  <% end %>
-      <%= link_to 'Back' , superadmin_users_path%>
+  <%= render "superadmin/companies/form", url: superadmin_companies_path %> 
+  <%= link_to 'Back' , superadmin_users_path%>
 </div>
