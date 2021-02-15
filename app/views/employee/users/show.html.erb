@@ -1,3 +1,4 @@
+<p id="notice"><%= notice %></p>
 <div class="container">
 <h1>show page</h1>
 <p><b>Name:</b><%= @user.name %></p>
@@ -6,4 +7,8 @@
 <p><b>Gender:</b><%= @user.gender%></p>
 <p><b>State:</b><%= @user.state.name%></p>
 <p><b>City:</b><%= @user.city.name%></p>
+<div>
+<%= link_to 'Add my details', new_accountdetail_path(user_id:current_user.id) %>
+<%= link_to 'View my details', accountdetails_path(user_id:current_user.id) %>
+</div>
 </div> 

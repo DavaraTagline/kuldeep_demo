@@ -30,10 +30,14 @@
         <% if can? :destroy, user%>
         <td><%= link_to 'Destroy',admin_user_path(user), method: :delete, data: { confirm: 'Are you sure?'} %></td>
         <% end %>
+        <td><%= link_to 'Add details', new_accountdetail_path(user_id: user) %></td>      
+        <td><%= link_to 'Show details', accountdetails_path(user_id:user) %></td>  
       </tr>
     <% end %>
   </tbody>
 </table>
 <div>
 <%= link_to 'New',new_admin_user_path %>
+<%= link_to 'Add my details', new_accountdetail_path(user_id:current_user.id) %>
+<%= link_to 'View my details', accountdetails_path(user_id:current_user.id) %>
 </div>

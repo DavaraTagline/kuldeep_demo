@@ -47,19 +47,19 @@ module Superadmin
 
     def superadmin_params
       base_params = params.require(:user).permit(:name, :email, :phone, :gender, :state_id, :city_id)
-      unless action_name == 'update'
+      if action_name == 'update'
+        base_params
+      else
         password = params.dig('user', 'password')
         password_confirmation = params.dig('user', 'password_confirmation')
         base_params.merge(password: password, password_confirmation: password_confirmation)
-      else
-        base_params
       end
     end
 
     def restrict_user
       unless current_user.has_role? :superadmin
         if current_user.has_role? :admin
-          redirect_to admin_users_path, notice: 'You are not allowed!'
+          redirect_to admin_users_path
         elsif current_user.has_role? :employee
           redirect_to employee_user_path(current_user)
         else

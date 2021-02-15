@@ -1,0 +1,32 @@
+<div class="container">
+<p id="notice"><%= notice %></p>
+<%= flash_messages %>
+<h1 class="text-center">Account Details</h1>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Account Name</th>
+      <th scope="col">Account Number</th>
+      <th scope="col">Branch name</th>
+      <th scope="col" colspan=3>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @accountdetails.each do |a| %>
+      <tr>
+        <td><%= a.id %></td>
+        <td><%= a.account_name %></td>
+        <td><%= a.account_number %></td>
+        <td><%= a.branch_name %></td>
+        <td><%= link_to 'Show', accountdetail_path(a) %></td>
+        <td><%= link_to 'Edit', edit_accountdetail_path(a) %></td>
+        <% if can? :destroy, a %>
+        <td><%= link_to 'Destroy', accountdetail_path(a),method: :delete, data: { confirm: 'Are you sure?'} %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= link_to 'Back to users', superadmin_users_path %>
+</div>
