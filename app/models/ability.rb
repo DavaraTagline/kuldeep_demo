@@ -13,7 +13,7 @@ class Ability
       can :manage, Accountdetail
     elsif user.employee?
       can [:read], User, id: user.id
-      can %i[read update create], Accountdetail, id: user.id
+      can %i[read update create], Accountdetail
     elsif user.admin?
       can %i[create read update], User
       can %i[create read update], Accountdetail
