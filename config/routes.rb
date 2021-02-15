@@ -5,7 +5,14 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   root 'home#index'
   get '/cities', to: 'home#index'
-  namespace :admin do 
+  resources :accountdetails, path: 'account_details' do 
+    collection do
+      get 'accountdetails/:user_id', to: 'accountdetails#index', as: :details
+    end
+  end
+  # resources :accountdetails
+  # get '/accountdetails/:user_id', to: 'accountdetails#index'
+  namespace :admin do
     resources :users
   end
 

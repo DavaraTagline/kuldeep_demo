@@ -1,0 +1,17 @@
+<div class="container">
+<% if @accountdetail.errors.any? %>
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <h4 class="alert-heading">Something went wrong!</h4>
+    <ul>
+    <% @accountdetail.errors.full_messages.each do |msg| %>
+       <li><%= msg %></li>
+    <% end %>
+    </ul>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<% end %>
+<h2>Add Account details</h2>
+<%= render "layouts/form", url: accountdetails_path %>
+</div>

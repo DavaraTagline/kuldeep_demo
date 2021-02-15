@@ -1,0 +1,10 @@
+<div class="container">
+    <h1>show page</h1>
+    <p><b>Branch Name:</b><%= @accountdetail.branch_name %></p>
+    <p><b>Account Number:</b><%= @accountdetail.account_number %></p>
+    <p><b>Account Name:</b><%= @accountdetail.account_name %></p>
+    <p><b>Image:</b></p><%= image_tag @accountdetail.image %>
+    <div>
+        <%= link_to 'Back to users', superadmin_users_path %>
+    </div>
+</div>
