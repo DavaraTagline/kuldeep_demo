@@ -12,25 +12,25 @@ module Api
             def create
                 @user = User.new(user_params)
                 if @user.save
-                    render json: {status: 'Success', data: @user}
+                    success_json(@user,"Created Successfully!",200)
                 else
-                    render json: {status: 'Error', data: @user.errors}
+                    err_json("something went wrong!",422,@user.errors)
                 end
             end
 
             def update
                 if @user.update(user_params)
-                    render json: {status: 'Updated', data: @user}
+                    success_json(@user,"Updated Successfully!",200)
                 else
-                    render json: {status: 'Error', data: @user.errors}
+                    err_json("something went wrong!",422,@user.errors)
                 end
             end
 
             def destroy
                 if @user.destroy
-                    render json: {status: 'Deleted successfully'}
+                    success_json(@user,"Deleted Successfully!",200)
                 else
-                    render json: {status: 'There is something wrong!'}
+                    err_json("something went wrong!",422,@user.errors)
                 end            
             end
 
