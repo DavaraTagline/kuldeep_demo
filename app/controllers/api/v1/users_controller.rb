@@ -1,10 +1,11 @@
 module Api
     module V1
-        class UsersController < ApplicationController
+        class UsersController < Api::V1::BaseController
+            before_action :authenticate_user!
             skip_before_action :verify_authenticity_token
             before_action :set_user, only: %i[show update destroy]
             def index
-                @users = User.all
+                @users = User.includes(:state,:city).all
             end
             
             def show; end
@@ -12,25 +13,25 @@ module Api
             def create
                 @user = User.new(user_params)
                 if @user.save
-                    success_json(@user,"Created Successfully!",200)
+                    success_json(@user,"Created Successfully!")
                 else
-                    err_json("something went wrong!",422,@user.errors)
+                    err_json(@user.errors,"something went wrong!",422)
                 end
             end
 
             def update
                 if @user.update(user_params)
-                    success_json(@user,"Updated Successfully!",200)
+                    success_json(@user,"Updated Successfully!")
                 else
-                    err_json("something went wrong!",422,@user.errors)
+                    err_json(@user.errors,"something went wrong!",422)
                 end
             end
 
             def destroy
                 if @user.destroy
-                    success_json(@user,"Deleted Successfully!",200)
+                    success_json(@user,"Deleted Successfully!")
                 else
-                    err_json("something went wrong!",422,@user.errors)
+                    err_json(@user.errors,"something went wrong!",404)
                 end            
             end
 

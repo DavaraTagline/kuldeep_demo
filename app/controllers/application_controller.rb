@@ -2,6 +2,7 @@
 
 # This controller is main controller of application
 class ApplicationController < ActionController::Base
+  respond_to :json, :html
   before_action :configure_permitted_parameters, if: :devise_controller?
   rescue_from CanCan::AccessDenied do |exception|
     if current_user.has_role? :admin
@@ -23,14 +24,6 @@ class ApplicationController < ActionController::Base
     else
       root_path
     end
-  end
-
-  def success_json(data,msg,code)
-    return render json: {status: 'Success', message: msg, data: data, status_code: code, errors: []}
-  end
-
-  def err_json(msg,code,err)
-    return render json: {status: 'Error', message: msg, data: [], status_code: code, errors: err}
   end
 
   protected

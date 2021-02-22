@@ -19,7 +19,16 @@ Devise.setup do |config|
   # ==> Controller configuration
   # Configure the parent class to the devise controllers.
   # config.parent_controller = 'DeviseController'
-
+  config.jwt do |jwt|
+    jwt.secret = 'b1dc70a2c4636fedfc754547efcd4edf475a7c66dea2a65f10567522d76fa66084866e20dc8a6b8c31753119bcb4681ce8d5e1cf542b09f34692fe9f9617b176'
+    jwt.dispatch_requests = [
+        ['POST', %r{^/api/v1/users/sign_in$}]
+      ]
+      jwt.revocation_requests = [
+        ['DELETE', %r{^/api/v1/users/sign_out$}]
+      ]
+    jwt.expiration_time = 5.minutes.to_i
+  end
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class

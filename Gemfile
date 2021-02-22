@@ -27,6 +27,7 @@ gem 'bullet'
 gem 'cancancan'
 gem 'cocoon'
 gem 'devise'
+gem 'devise-jwt'
 gem 'rolify'
 gem 'rubocop', require: false
 # Use Active Storage variant
