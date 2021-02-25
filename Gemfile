@@ -26,8 +26,11 @@ gem 'jbuilder', '~> 2.7'
 gem 'bullet'
 gem 'cancancan'
 gem 'cocoon'
-gem 'devise'
-gem 'devise-jwt'
+gem 'devise', github: 'heartcombo/devise', branch: 'ca-omniauth-2'
+gem 'omniauth-google-oauth2'
+gem 'omniauth-facebook'
+gem "omniauth-rails_csrf_protection"
+gem 'jwt'
 gem 'rolify'
 gem 'rubocop', require: false
 # Use Active Storage variant

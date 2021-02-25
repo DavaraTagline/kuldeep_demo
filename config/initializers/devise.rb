@@ -19,22 +19,13 @@ Devise.setup do |config|
   # ==> Controller configuration
   # Configure the parent class to the devise controllers.
   # config.parent_controller = 'DeviseController'
-  config.jwt do |jwt|
-    jwt.secret = 'b1dc70a2c4636fedfc754547efcd4edf475a7c66dea2a65f10567522d76fa66084866e20dc8a6b8c31753119bcb4681ce8d5e1cf542b09f34692fe9f9617b176'
-    jwt.dispatch_requests = [
-        ['POST', %r{^/api/v1/users/sign_in$}]
-      ]
-      jwt.revocation_requests = [
-        ['DELETE', %r{^/api/v1/users/sign_out$}]
-      ]
-    jwt.expiration_time = 5.minutes.to_i
-  end
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class
   # with default "from" parameter.
   config.mailer_sender = 'please-change-me-at-config-initializers-devise@example.com'
-
+  config.omniauth :google_oauth2, Rails.application.credentials.google_sign_in[:client_id], Rails.application.credentials.google_sign_in[:client_secret]
+  config.omniauth :facebook, Rails.application.credentials.facebook[:APP_ID], Rails.application.credentials.facebook[:APP_SECRET]
   # Configure the class responsible to send e-mails.
   # config.mailer = 'Devise::Mailer'
 
@@ -303,7 +294,7 @@ Devise.setup do |config|
   #
   # When using OmniAuth, Devise cannot automatically set OmniAuth path,
   # so you need to do it manually. For the users scope, it would be:
-  # config.omniauth_path_prefix = '/my_engine/users/auth'
+  config.omniauth_path_prefix = '/my_engine/users/auth'
 
   # ==> Turbolinks configuration
   # If your app is using Turbolinks, Turbolinks::Controller needs to be included to make redirection work correctly:

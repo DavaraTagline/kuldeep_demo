@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_19_064337) do
+ActiveRecord::Schema.define(version: 2021_02_25_070104) do
 
   create_table "accountdetails", force: :cascade do |t|
     t.integer "user_id", null: false
@@ -56,7 +56,11 @@ ActiveRecord::Schema.define(version: 2021_02_19_064337) do
     t.text "address"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "state_id", null: false
+    t.integer "city_id", null: false
+    t.index ["city_id"], name: "index_addresses_on_city_id"
     t.index ["company_id"], name: "index_addresses_on_company_id"
+    t.index ["state_id"], name: "index_addresses_on_state_id"
   end
 
   create_table "cities", force: :cascade do |t|
@@ -113,7 +117,11 @@ ActiveRecord::Schema.define(version: 2021_02_19_064337) do
     t.text "gender"
     t.integer "state_id", null: false
     t.integer "city_id", null: false
+    t.string "provider", default: "", null: false
+    t.string "uid", default: "", null: false
+    t.integer "company_id"
     t.index ["city_id"], name: "index_users_on_city_id"
+    t.index ["company_id"], name: "index_users_on_company_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["state_id"], name: "index_users_on_state_id"
@@ -130,7 +138,9 @@ ActiveRecord::Schema.define(version: 2021_02_19_064337) do
   add_foreign_key "accountdetails", "users"
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "addresses", "cities"
   add_foreign_key "addresses", "companies"
+  add_foreign_key "addresses", "states"
   add_foreign_key "cities", "states"
   add_foreign_key "users", "cities"
   add_foreign_key "users", "states"

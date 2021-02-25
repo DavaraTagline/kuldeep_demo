@@ -6,17 +6,34 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable,
-         :jwt_authenticatable, jwt_revocation_strategy: JwtBlacklist
+         :recoverable, :rememberable,:validatable, :omniauthable, omniauth_providers: [:google_oauth2, :facebook]
+  before_create :assign_default_role
   belongs_to :city
   belongs_to :state
+  belongs_to :company
   has_many :accountdetails
   scope :employee_and_admin_users, -> { where(roles: { name: %w[employee admin] }) }
   scope :employee_users, -> { where(roles: { name: 'employee' }) }
 
-  # def generate_jwt
-  #   JWT.encode({id: id, exp: 24.hours.from_now.to_i}, Rails.application.secrets.secret_key_base)
-  # end
+  def generate_jwt
+    JWT.encode({ id: id, exp: 24.hours.from_now.to_i }, Rails.application.secrets.secret_key_base)
+  end
+
+  def self.create_from_provider_data(provider_data)
+    where(provider: provider_data.provider, uid: provider_data.uid).first_or_initialize do | user |
+      user.email = provider_data.info.email
+      user.password = Devise.friendly_token[0, 20]
+      user.name = provider_data.info.name
+      user.state_id = 1
+      user.city_id = 1
+      user.company_id = 1
+      user.save!
+    end
+  end
+  
+  def assign_default_role
+    add_role(:employee)
+  end
 
   def admin?
     has_role?(:admin)

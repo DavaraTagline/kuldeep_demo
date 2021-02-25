@@ -2,7 +2,6 @@
 
 # This controller is main controller of application
 class ApplicationController < ActionController::Base
-  respond_to :json, :html
   before_action :configure_permitted_parameters, if: :devise_controller?
   rescue_from CanCan::AccessDenied do |exception|
     if current_user.has_role? :admin
