@@ -1,6 +1,7 @@
 class AccountdetailsController < ApplicationController
-  before_action :set_account_detail, only: %i[show edit update destroy]
   load_and_authorize_resource param_method: :account_detail_params
+  before_action :set_account_detail, only: %i[show edit update destroy]
+
   def index
     @accountdetails = Accountdetail.where(user_id: params[:user_id])
   end

@@ -2,14 +2,15 @@
 
 module Superadmin
   class CompaniesController < ApplicationController
-    before_action :set_company, only: %i[show edit update destroy]
     load_and_authorize_resource
+    before_action :set_company, only: %i[show edit update destroy]
+
     def index
       @companies = Company.all
     end
 
     def show
-      @addresses = @company.addresses.pluck(:address).to_sentence
+      @addresses = Address.includes(:state,:city).where("company_id = ?",@company.id)
     end
 
     def new
@@ -45,7 +46,7 @@ module Superadmin
 
     def company_params
       params.require(:company).permit(:name, :email, :website,
-                                      addresses_attributes: %i[id company_id address _destroy])
+                                      addresses_attributes: %i[id company_id state_id city_id address _destroy])
     end
 
     def set_company

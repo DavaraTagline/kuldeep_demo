@@ -1,5 +1,40 @@
 <div class="nested-fields">
-<%= f.text_area :address, autofocus: true, class: "form-control" %>
-<%= f.check_box :_destroy %>
-<%= link_to_remove_association "remove", f %>
+    <%= f.text_area :address, autofocus: true, class: "form-control" %>
+   
+    <%= f.label :state_id, class:"col-sm-2 col-form-label" %>
+    <%= f.collection_select(:state_id, State.all, :id, :name, {prompt:  'Select a State'}, class:'state') %>
+    
+    <%= f.label :city_id,class:"col-sm-2 col-form-label" %>
+    <%= f.collection_select(:city_id, City.all ,:id, :name ,{prompt: "Select a City"}, class:'city') %>
+
+    <%= link_to_remove_association "remove", f %>
 </div>
+
+
+
+
+<script type="text/javascript">
+  $(document).on("change", ".state", function(){
+    var parent_nested_el = $(this).parent('.nested-fields'); 
+    var state = parent_nested_el.find(".state").val();
+    console.log(state)
+    $.ajax({
+      url: "/cities",
+      method: "GET",  
+      dataType: "json",
+      data: {state_id: state},
+      error: function (xhr, status, error) {
+        console.error('AJAX Error: ' + status + error);
+      },
+      success: function (response) {
+        console.log(response);
+        var cities = response["cities"];
+        parent_nested_el.find(".city").empty();
+        parent_nested_el.find(".city").append('<option>Select city</option>');
+        for(var i=0; i< cities.length; i++){
+          parent_nested_el.find(".city").append('<option value="' + cities[i]["id"] + '">' + cities[i]["name"] + '</option>');
+        }
+      }
+    });
+});
+</script>

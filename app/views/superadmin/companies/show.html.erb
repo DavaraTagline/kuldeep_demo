@@ -1,8 +1,16 @@
 <div class="container">
-<h1>show page</h1>
-<p><b>Name:</b><%= @company.name %></p>
-<p><b>Email:</b><%= @company.email%></p>
-<p><b>Website:</b><%= @company.website%></p>
-<p><b>Addresses:</b><%= @addresses  %></p>
-<%= link_to 'Back', superadmin_companies_path%>
+    <h1>Company's show</h1>
+    <p><b>Name:</b><%= @company.name %></p>
+    <p><b>Email:</b><%= @company.email%></p>
+    <p><b>Website:</b><%= @company.website%></p>
+    <p><b>Address:</b>
+        <% @addresses.each do |a| %>
+            <div class="card mt-2" style="width: 18rem;">
+                <div class="card-body">
+                    <p class="card-text"><%= a.address %>,<%= a.city.name %>,<%= a.state.name%></p>
+                </div>
+            </div>
+        <% end %>
+    </p>
+    <%= link_to 'Back', superadmin_companies_path%>
 </div> 
