@@ -2,7 +2,8 @@
 
 # This controller is help to render home page
 class HomeController < ApplicationController
-  def index
+  
+  def getcities
     @cities = if params[:state_id].present?
                 State.find(params[:state_id]).cities
               else
@@ -16,4 +17,20 @@ class HomeController < ApplicationController
       end
     end
   end
+
+  def getdepartments
+    @departments = if params[:company_id].present?
+                Company.find_by("id = ? ",params[:company_id]).departments
+              else
+                []
+              end
+    if request.xhr?
+      respond_to do |format|
+        format.json do
+          render json: { departments: @departments }
+        end
+      end
+    end
+  end
+
 end

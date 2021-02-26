@@ -12,6 +12,7 @@ class Ability
       can :manage, User
       can :manage, Accountdetail
       can :manage, Company
+      can :manage, Department
     elsif user.employee?
       can [:read], User, id: user.id
       can %i[read update create], Accountdetail

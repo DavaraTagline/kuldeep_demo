@@ -46,7 +46,7 @@ module Superadmin
     private
 
     def superadmin_params
-      base_params = params.require(:user).permit(:name, :email, :phone, :gender, :state_id, :city_id)
+      base_params = params.require(:user).permit(:name, :email, :phone, :gender, :state_id, :city_id,:company_id,:department_id)
       if action_name == 'update'
         base_params
       else

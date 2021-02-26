@@ -1,0 +1,28 @@
+<div class="container">
+    <p id="notice"><%= notice %></p>
+    <%= flash_messages %>
+    <h1 class="text-center"><%= @company.name %></h1>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col" colspan=3 class="text-center">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% @departments.each do |d| %>
+            <tr>
+                <td><%= d.id %></td>
+                <td><%= d.name %></td>
+                <td><%= link_to 'Show',superadmin_company_department_path(id: d) %></td>
+                <td><%= link_to 'Edit',edit_superadmin_company_department_path(id: d) %></td>
+                <td><%= link_to 'Delete',superadmin_company_department_path(id: d), method: :delete, data: { confirm: 'Are you sure?'} %></td>
+            </tr>
+            <% end %>
+        </tbody>
+    </table>
+    <div>
+    <%= link_to 'Back to companies' , superadmin_companies_path %>
+    </div>
+</div>
