@@ -1,6 +1,6 @@
  <%= form_for([:superadmin,:company,@department]) do |f| %>
 
-    <%= f.hidden_field :company_id, value: @department.company_id %>
+    <%= f.hidden_field :company_id, value: params[:company_id] %>
 
     <div class="form-group row">
       <%= f.label :name, class:"col-sm-2 col-form-label" %><br />

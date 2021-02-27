@@ -11,13 +11,13 @@
             </tr>
         </thead>
         <tbody>
-            <% @departments.each do |d| %>
+            <% @departments.each do |department| %>
             <tr>
-                <td><%= d.id %></td>
-                <td><%= d.name %></td>
-                <td><%= link_to 'Show',superadmin_company_department_path(id: d) %></td>
-                <td><%= link_to 'Edit',edit_superadmin_company_department_path(id: d) %></td>
-                <td><%= link_to 'Delete',superadmin_company_department_path(id: d), method: :delete, data: { confirm: 'Are you sure?'} %></td>
+                <td><%= department.id %></td>
+                <td><%= department.name %></td>
+                <td><%= link_to 'Show',superadmin_company_department_path(id: department) %></td>
+                <td><%= link_to 'Edit',edit_superadmin_company_department_path(id: department) %></td>
+                <td><%= link_to 'Delete',superadmin_company_department_path(id: department), method: :delete, data: { confirm: 'Are you sure?'} %></td>
             </tr>
             <% end %>
         </tbody>

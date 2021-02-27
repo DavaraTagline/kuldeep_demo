@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_26_061656) do
+ActiveRecord::Schema.define(version: 2021_02_26_130236) do
 
   create_table "accountdetails", force: :cascade do |t|
     t.integer "user_id", null: false
@@ -123,8 +123,8 @@ ActiveRecord::Schema.define(version: 2021_02_26_061656) do
     t.string "name"
     t.text "phone"
     t.text "gender"
-    t.integer "state_id", null: false
-    t.integer "city_id", null: false
+    t.integer "state_id"
+    t.integer "city_id"
     t.string "provider", default: "", null: false
     t.string "uid", default: "", null: false
     t.integer "company_id"
