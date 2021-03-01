@@ -22,6 +22,8 @@
         <td><%= link_to 'Show',superadmin_company_path(c) %></td>
         <td><%= link_to 'Edit',edit_superadmin_company_path(c) %></td>
         <td><%= link_to 'Destroy',superadmin_company_path(c), method: :delete, data: { confirm: 'Are you sure?'} %></td>
+        <td><%= link_to 'Add department',new_superadmin_company_department_path(c) %></td>
+        <td><%= link_to 'Show department',superadmin_company_departments_path(c) %></td>
       </tr>
     <% end %>
   </tbody>

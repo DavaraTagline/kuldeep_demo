@@ -7,7 +7,7 @@
         <% @addresses.each do |a| %>
             <div class="card mt-2" style="width: 18rem;">
                 <div class="card-body">
-                    <p class="card-text"><%= a.address %>,<%= a.city.name %>,<%= a.state.name%></p>
+                    <p class="card-text"><%= a.address %>,<%= a.city_name %>,<%= a.state_name %></p>
                 </div>
             </div>
         <% end %>

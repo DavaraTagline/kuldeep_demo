@@ -8,9 +8,10 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable,:validatable, :omniauthable, omniauth_providers: [:google_oauth2, :facebook]
   before_create :assign_default_role
-  belongs_to :city
-  belongs_to :state
-  belongs_to :company
+  belongs_to :city, optional: true
+  belongs_to :state, optional: true
+  belongs_to :company, optional: true
+  belongs_to :department, optional: true
   has_many :accountdetails
   scope :employee_and_admin_users, -> { where(roles: { name: %w[employee admin] }) }
   scope :employee_users, -> { where(roles: { name: 'employee' }) }
@@ -24,9 +25,6 @@ class User < ApplicationRecord
       user.email = provider_data.info.email
       user.password = Devise.friendly_token[0, 20]
       user.name = provider_data.info.name
-      user.state_id = 1
-      user.city_id = 1
-      user.company_id = 1
       user.save!
     end
   end

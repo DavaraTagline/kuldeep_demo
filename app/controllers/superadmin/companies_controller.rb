@@ -10,7 +10,7 @@ module Superadmin
     end
 
     def show
-      @addresses = Address.includes(:state,:city).where("company_id = ?",@company.id)
+      @addresses = Address.joins(:state,:city).select("addresses.*,states.name as state_name, cities.name as city_name").where("company_id = ?",@company.id)
     end
 
     def new

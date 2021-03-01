@@ -17,7 +17,6 @@
   $(document).on("change", ".state", function(){
     var parent_nested_el = $(this).parent('.nested-fields'); 
     var state = parent_nested_el.find(".state").val();
-    console.log(state)
     $.ajax({
       url: "/cities",
       method: "GET",  
@@ -27,7 +26,6 @@
         console.error('AJAX Error: ' + status + error);
       },
       success: function (response) {
-        console.log(response);
         var cities = response["cities"];
         parent_nested_el.find(".city").empty();
         parent_nested_el.find(".city").append('<option>Select city</option>');

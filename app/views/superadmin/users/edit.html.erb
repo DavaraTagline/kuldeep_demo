@@ -37,15 +37,29 @@
   <div class="form-group row">
     <%= f.label :state_id, class:"col-sm-2 col-form-label" %>
     <div class="col-sm-8">
-    <%= f.collection_select(:state_id, State.includes(:cities).all, :id, :name, :prompt => 'Select a State') %>
+    <%= f.collection_select(:state_id, State.includes(:cities).all, :id, :name, {prompt: "Select a State"}) %>
     </div>
   </div>
 
   <div class="form-group row">
     <%= f.label :city_id,class:"col-sm-2 col-form-label" %>
      <div class="col-sm-8">
-    <%= f.grouped_collection_select(:city_id, State.all,:cities,:name,:id, :name, :prompt => 'Select a City') %>
+    <%= f.grouped_collection_select(:city_id, State.all,:cities,:name,:id, :name, {prompt: "Select a City"}) %>
      </div>
+  </div>
+
+  <div class="form-group row ab">
+    <%= f.label :company_id, class:"col-sm-2 col-form-label" %>
+    <div class="col-sm-8">
+    <%= f.collection_select(:company_id, Company.all, :id, :name, {prompt: "Select a Company"}) %>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <%= f.label :department_id, class:"col-sm-2 col-form-label" %>
+    <div class="col-sm-8">
+    <%= f.collection_select(:department_id, Department.all, :id, :name, {prompt: "Select a Department"}) %>
+    </div>
   </div>
 
   <div class="actions">
@@ -54,3 +68,29 @@
 <% end %>
 <%= link_to 'Back', superadmin_users_path%>
 </div> 
+
+<script type="text/javascript">
+  $(document).on("change", "#user_company_id", function(){
+  var company = $(this).val();
+  console.log(company)
+  $.ajax({
+    url: "/companies",
+    method: "GET",  
+    dataType: "json",
+    data: {company_id: company},
+    error: function (xhr, status, error) {
+      console.error('AJAX Error: ' + status + error);
+    },
+    success: function (response) {
+      console.log(response);
+      var departments = response["departments"];
+      $("#user_department_id").empty();
+
+      $("#user_department_id").append('<option>Select Department</option>');
+      for(var i=0; i< departments.length; i++){
+        $("#user_department_id").append('<option value="' + departments[i]["id"] + '">' + departments[i]["name"] + '</option>');
+      }
+    }
+  });
+});
+</script>
