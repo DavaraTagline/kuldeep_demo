@@ -9,7 +9,8 @@ module Employee
     before_action :set_employee_user, only: %i[show]
     load_and_authorize_resource
 
-    def show; end
+    def show
+    end
 
     private
 
@@ -26,7 +27,7 @@ module Employee
     end
 
     def set_employee_user
-      @user = User.find(params[:id])
+      @user = User.joins(:state, :city).select("users.*, states.name as state_name, cities.name as city_name").find(params[:id])
     end
   end
 end

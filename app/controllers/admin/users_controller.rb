@@ -8,7 +8,7 @@ module Admin
     before_action :restrict_user
     load_and_authorize_resource param_method: :admin_params
     def index
-      @users = User.includes(:state, :city, :roles).employee_users
+      @users = User.joins(:roles,:state,:city).select("users.*, states.name as state_name, cities.name as city_name").employee_users
     end
 
     def show; end
@@ -68,7 +68,7 @@ module Admin
     end
 
     def set_admin_user
-      @user = User.find(params[:id])
+      @user = User.joins(:state, :city).select("users.*, states.name as state_name, cities.name as city_name").find(params[:id])
     end
   end
 end
