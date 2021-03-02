@@ -12,7 +12,8 @@ class User < ApplicationRecord
   belongs_to :state, optional: true
   belongs_to :company, optional: true
   belongs_to :department, optional: true
-  has_many :accountdetails
+  has_many :accountdetails, inverse_of: :user
+  accepts_nested_attributes_for :accountdetails, allow_destroy: true
   scope :employee_and_admin_users, -> { where(roles: { name: %w[employee admin] }) }
   scope :employee_users, -> { where(roles: { name: 'employee' }) }
 

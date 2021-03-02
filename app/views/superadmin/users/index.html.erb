@@ -1,45 +1,36 @@
-<p id="notice"><%= notice %></p>
-<%= flash_messages %>
-<h1 class="text-center">Userdetails</h1>
-<div class="float-right">
-  <%= link_to 'Add Company',new_superadmin_company_path%>
-  <%= link_to 'Show companies',superadmin_companies_path %>
-</div>
-<table class="table table-hover">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Name</th>
-      <th scope="col">Email</th>
-      <th scope="col">Phone</th>
-      <th scope="col">Gender</th>
-      <th scope="col">State</th>
-      <th scope="col">City</th>
-      <th scope="col" colspan=5>Action</th>
-    </tr>
-    </tr>
-  </thead>
-  <tbody>
-    <% @users.each do |user| %>
+<div class="container">
+  <h1 class="text-center mt-2">User details</h1>
+  <table class="table table-bordered">
+    <thead>
       <tr>
-        <td><%= user.id %></td>
-        <td><%= user.name %></td>
-        <td><%= user.email %></td>
-        <td><%= user.phone %></td>
-        <td><%= user.gender %></td>
-        <td><%= user.state_name %></td>
-        <td><%= user.city_name %></td>
-        <td><%= link_to 'show', superadmin_user_path(user)%></td>
-        <td><%= link_to 'Edit', edit_superadmin_user_path(user)%></td>
-        <td><%= link_to 'Destroy', superadmin_user_path(user), method: :delete, data: { confirm: 'Are you sure?'} %></td>
-        <td><%= link_to 'Add details', new_accountdetail_path(user_id: user) %></td>      
-        <td><%= link_to 'Show details', accountdetails_path(user_id:user) %></td>      
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Email</th>
+        <th scope="col">Phone</th>
+        <th scope="col">Gender</th>
+        <th scope="col">Company</th>
+        <th scope="col">State</th>
+        <th scope="col">City</th>
+        <th scope="col" colspan=3, class="text-center" >Action</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
-<div>
-<%= link_to 'New', new_superadmin_user_path %>
-<%= link_to 'Add my details', new_accountdetail_path(user_id:current_user.id) %>
-<%= link_to 'View my details', accountdetails_path(user_id:current_user.id) %>
+      </tr>
+    </thead>
+    <tbody>
+      <% @users.each do |user| %>
+        <tr>
+          <td><%= user.id %></td>
+          <td><%= user.name %></td>
+          <td><%= user.email %></td>
+          <td><%= user.phone %></td>
+          <td><%= user.gender %></td>
+          <td><%= user.company_name %></td>
+          <td><%= user.state_name %></td>
+          <td><%= user.city_name %></td>
+          <td><%= link_to 'show', superadmin_user_path(user), class:'btn btn-outline-primary btn-sm' %></td>
+          <td><%= link_to 'Edit', edit_superadmin_user_path(user), class:'btn btn-outline-secondary btn-sm' %></td>
+          <td><%= link_to 'Destroy', superadmin_user_path(user), method: :delete, data: { confirm: 'Are you sure?'}, class:'btn btn-outline-danger btn-sm' %></td>  
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 </div>

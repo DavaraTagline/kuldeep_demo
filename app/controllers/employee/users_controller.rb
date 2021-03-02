@@ -10,6 +10,7 @@ module Employee
     load_and_authorize_resource
 
     def show
+       @accountdetails = Accountdetail.where("user_id = ?",@user.id)
     end
 
     private
