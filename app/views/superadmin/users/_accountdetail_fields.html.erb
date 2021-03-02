@@ -1,0 +1,34 @@
+<div class="nested-fields">
+
+    <%= f.hidden_field :user_id, value: params[:id] %>
+    
+    <div class="form-group row">
+    <%= f.label :branch_name,  class:"col-sm-2 col-form-label" %><br />
+    <div class="col-sm-8">
+    <%= f.text_field :branch_name, autofocus: true, class: "form-control" %>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <%= f.label :account_number, class:"col-sm-2 col-form-label" %><br />
+    <div class="col-sm-8">
+    <%= f.number_field :account_number, autofocus: true,class: "form-control" %>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <%= f.label :account_name, class:"col-sm-2 col-form-label" %><br />
+    <div class="col-sm-8">
+    <%= f.text_field :account_name, autofocus: true,class: "form-control" %>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <%= f.label :image, class:"col-sm-2 col-form-label" %><br />
+    <div class="col-sm-8">
+    <%= f.file_field :image %>
+    </div>
+  </div>
+
+    <%= link_to_remove_association "remove", f, class: 'btn btn-outline-danger btn-sm' %>
+</div>

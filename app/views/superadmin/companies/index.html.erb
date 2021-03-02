@@ -1,15 +1,13 @@
 <div class="container">
-<p id="notice"><%= notice %></p>
-<%= flash_messages %>
 <h1 class="text-center">Companies</h1>
-<table class="table table-hover">
+<table class="table table-bordered">
   <thead>
     <tr>
       <th scope="col">#</th>
       <th scope="col">Name</th>
       <th scope="col">Email</th>
       <th scope="col">Website</th>
-      <th scope="col" colspan=3>Action</th>
+      <th scope="col" colspan=5 class="text-center">Action</th>
     </tr>
   </thead>
   <tbody>
@@ -19,11 +17,11 @@
         <td><%= c.name %></td>
         <td><%= c.email %></td>
         <td><%= c.website %></td>
-        <td><%= link_to 'Show',superadmin_company_path(c) %></td>
-        <td><%= link_to 'Edit',edit_superadmin_company_path(c) %></td>
-        <td><%= link_to 'Destroy',superadmin_company_path(c), method: :delete, data: { confirm: 'Are you sure?'} %></td>
-        <td><%= link_to 'Add department',new_superadmin_company_department_path(c) %></td>
-        <td><%= link_to 'Show department',superadmin_company_departments_path(c) %></td>
+        <td><%= link_to 'Show',superadmin_company_path(c), class:'btn btn-outline-primary btn-sm' %></td>
+        <td><%= link_to 'Edit',edit_superadmin_company_path(c), class:'btn btn-outline-secondary btn-sm' %></td>
+        <td><%= link_to 'Destroy',superadmin_company_path(c), method: :delete, data: { confirm: 'Are you sure?'}, class:'btn btn-outline-danger btn-sm' %></td>
+        <td><%= link_to 'Add department',new_superadmin_company_department_path(c), class:'btn btn-outline-info btn-sm', style: 'font-size:smaller' %></td>
+        <td><%= link_to 'Show department',superadmin_company_departments_path(c), class:'btn btn-outline-dark btn-sm', style: 'font-size:smaller' %></td>
       </tr>
     <% end %>
   </tbody>

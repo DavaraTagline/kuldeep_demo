@@ -9,10 +9,12 @@ module Superadmin
     before_action :set_superadmin_user, only: %i[show edit update destroy]
     load_and_authorize_resource param_method: :superadmin_params
     def index
-      @users = User.left_joins(:roles,:state,:city).select("users.*, states.name as state_name, cities.name as city_name").employee_and_admin_users
+      @users = User.left_joins(:roles,:state,:city,:company).select("users.*, states.name as state_name, cities.name as city_name, companies.name as company_name").employee_and_admin_users
     end
 
-    def show; end
+    def show
+      @accountdetails = Accountdetail.where("user_id = ?",@user.id) 
+    end
 
     def new
       @user = User.new
@@ -46,7 +48,8 @@ module Superadmin
     private
 
     def superadmin_params
-      base_params = params.require(:user).permit(:name, :email, :phone, :gender, :state_id, :city_id,:company_id,:department_id)
+      base_params = params.require(:user).permit(:name, :email, :phone, :gender, :state_id, :city_id, :company_id, :department_id, 
+                                                  accountdetails_attributes: [:id, :user_id, :branch_name, :account_number, :account_name, :image, :_destroy])
       if action_name == 'update'
         base_params
       else

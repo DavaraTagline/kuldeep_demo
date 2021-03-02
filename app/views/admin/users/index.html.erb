@@ -1,7 +1,6 @@
-<p id="notice"><%= notice %></p>
-<%= flash_messages %>
+<div class="container">
 <h1 class="text-center">Employee details</h1>
-<table class="table table-hover">
+<table class="table table-bordered">
   <thead>
     <tr>
       <th scope="col">#</th>
@@ -9,9 +8,10 @@
       <th scope="col">Email</th>
       <th scope="col">Phone</th>
       <th scope="col">Gender</th>
+      <th scope="col">Company</th>
       <th scope="col">State</th>
       <th scope="col">City</th>
-      <th scope="col" colspan=3>Action</th>
+      <th scope="col" colspan=4, class="text-center">Action</th>
     </tr>
     </tr>
   </thead>
@@ -23,21 +23,18 @@
         <td><%= user.email %></td>
         <td><%= user.phone %></td>
         <td><%= user.gender %></td>
+        <td><%= user.company_name %></td>
         <td><%= user.state_name %></td>
         <td><%= user.city_name %></td>
-        <td><%= link_to 'show',admin_user_path(user)%></td>
-        <td><%= link_to 'Edit',edit_admin_user_path(user)%></td>
+        <td><%= link_to 'show',admin_user_path(user), class:'btn btn-outline-primary btn-sm' %></td>
+        <td><%= link_to 'Edit',edit_admin_user_path(user), class:'btn btn-outline-secondary btn-sm' %></td>
         <% if can? :destroy, user%>
-        <td><%= link_to 'Destroy',admin_user_path(user), method: :delete, data: { confirm: 'Are you sure?'} %></td>
+        <td><%= link_to 'Destroy',admin_user_path(user), method: :delete, data: { confirm: 'Are you sure?'}, class:'btn btn-outline-danger btn-sm'  %></td>
         <% end %>
-        <td><%= link_to 'Add details', new_accountdetail_path(user_id: user) %></td>      
-        <td><%= link_to 'Show details', accountdetails_path(user_id:user) %></td>  
+        <td><%= link_to 'Add details', new_accountdetail_path(user_id: user), class:'btn btn-outline-info btn-sm', style: 'font-size:smaller' %></td>      
+        <td><%= link_to 'Show details', accountdetails_path(user_id:user), class:'btn btn-outline-dark btn-sm', style: 'font-size:smaller' %></td>  
       </tr>
     <% end %>
   </tbody>
 </table>
-<div>
-<%= link_to 'New',new_admin_user_path %>
-<%= link_to 'Add my details', new_accountdetail_path(user_id:current_user.id) %>
-<%= link_to 'View my details', accountdetails_path(user_id:current_user.id) %>
 </div>

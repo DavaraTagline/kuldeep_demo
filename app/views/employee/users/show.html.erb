@@ -1,14 +1,22 @@
-<p id="notice"><%= notice %></p>
 <div class="container">
-    <h1>show page</h1>
+    <h1><%= @user.name%>'s Information</h1>
     <p><b>Name:</b><%= @user.name %></p>
     <p><b>Email:</b><%= @user.email%></p>
     <p><b>Phone:</b><%= @user.phone%></p>
     <p><b>Gender:</b><%= @user.gender%></p>
     <p><b>State:</b><%= @user.state_name%></p>
     <p><b>City:</b><%= @user.city_name%></p>
-    <div>
-    <%= link_to 'Add my details', new_accountdetail_path(user_id:current_user.id) %>
-    <%= link_to 'View my details', accountdetails_path(user_id:current_user.id) %>
-    </div>
+    <p><b>Accountdetails:</b>
+        <div class="row m-2">
+            <% @accountdetails.each do |account_detail| %>
+                <div class="card mt-2 ml-2" style="width: 18rem;">
+                    <div class="card-body">
+                        <p class="card-text"><b>Acc_Name:</b><%= account_detail.account_name %></p>
+                        <p class="card-text"><b>Acc_Number:</b><%= account_detail.account_number %></p>
+                        <p class="card-text"><b>Branch_Name:</b><%= account_detail.branch_name %></p>
+                    </div>
+                </div>
+            <% end %>
+        </div>
+    </p>
 </div> 
