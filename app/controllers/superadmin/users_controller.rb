@@ -72,7 +72,7 @@ module Superadmin
     end
 
     def set_superadmin_user
-      @user = User.joins(:state, :city).select("users.*, states.name as state_name, cities.name as city_name").find(params[:id])
+      @user = User.left_joins(:state, :city).select("users.*, states.name as state_name, cities.name as city_name").find(params[:id])
     end
   end
 end
