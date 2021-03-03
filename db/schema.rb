@@ -10,10 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_26_130236) do
+ActiveRecord::Schema.define(version: 2021_03_03_042958) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "accountdetails", force: :cascade do |t|
-    t.integer "user_id", null: false
+    t.bigint "user_id", null: false
     t.text "branch_name"
     t.integer "account_number"
     t.text "account_name"
@@ -26,8 +29,8 @@ ActiveRecord::Schema.define(version: 2021_02_26_130236) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
-    t.integer "record_id", null: false
-    t.integer "blob_id", null: false
+    t.bigint "record_id", null: false
+    t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
     t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
@@ -46,18 +49,18 @@ ActiveRecord::Schema.define(version: 2021_02_26_130236) do
   end
 
   create_table "active_storage_variant_records", force: :cascade do |t|
-    t.integer "blob_id", null: false
+    t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
   create_table "addresses", force: :cascade do |t|
-    t.integer "company_id", null: false
+    t.bigint "company_id", null: false
     t.text "address"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "state_id", null: false
-    t.integer "city_id", null: false
+    t.bigint "state_id", null: false
+    t.bigint "city_id", null: false
     t.index ["city_id"], name: "index_addresses_on_city_id"
     t.index ["company_id"], name: "index_addresses_on_company_id"
     t.index ["state_id"], name: "index_addresses_on_state_id"
@@ -65,7 +68,7 @@ ActiveRecord::Schema.define(version: 2021_02_26_130236) do
 
   create_table "cities", force: :cascade do |t|
     t.string "name"
-    t.integer "state_id", null: false
+    t.bigint "state_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["state_id"], name: "index_cities_on_state_id"
@@ -83,7 +86,7 @@ ActiveRecord::Schema.define(version: 2021_02_26_130236) do
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "company_id"
+    t.bigint "company_id"
     t.index ["company_id"], name: "index_departments_on_company_id"
   end
 
@@ -98,7 +101,7 @@ ActiveRecord::Schema.define(version: 2021_02_26_130236) do
   create_table "roles", force: :cascade do |t|
     t.string "name"
     t.string "resource_type"
-    t.integer "resource_id"
+    t.bigint "resource_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id"
@@ -123,12 +126,12 @@ ActiveRecord::Schema.define(version: 2021_02_26_130236) do
     t.string "name"
     t.text "phone"
     t.text "gender"
-    t.integer "state_id"
-    t.integer "city_id"
+    t.bigint "state_id"
+    t.bigint "city_id"
     t.string "provider", default: "", null: false
     t.string "uid", default: "", null: false
-    t.integer "company_id"
-    t.integer "department_id"
+    t.bigint "company_id"
+    t.bigint "department_id"
     t.index ["city_id"], name: "index_users_on_city_id"
     t.index ["company_id"], name: "index_users_on_company_id"
     t.index ["department_id"], name: "index_users_on_department_id"
@@ -138,8 +141,8 @@ ActiveRecord::Schema.define(version: 2021_02_26_130236) do
   end
 
   create_table "users_roles", id: false, force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "role_id"
+    t.bigint "user_id"
+    t.bigint "role_id"
     t.index ["role_id"], name: "index_users_roles_on_role_id"
     t.index ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id"
     t.index ["user_id"], name: "index_users_roles_on_user_id"
