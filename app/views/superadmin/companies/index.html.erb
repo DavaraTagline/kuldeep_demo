@@ -11,17 +11,18 @@
     </tr>
   </thead>
   <tbody>
-    <% @companies.each do |c| %>
+    <% @companies.each do |company| %>
       <tr>
-        <td><%= c.id %></td>
-        <td><%= c.name %></td>
-        <td><%= c.email %></td>
-        <td><%= c.website %></td>
-        <td><%= link_to 'Show',superadmin_company_path(c), class:'btn btn-outline-primary btn-sm' %></td>
-        <td><%= link_to 'Edit',edit_superadmin_company_path(c), class:'btn btn-outline-secondary btn-sm' %></td>
-        <td><%= link_to 'Destroy',superadmin_company_path(c), method: :delete, data: { confirm: 'Are you sure?'}, class:'btn btn-outline-danger btn-sm' %></td>
-        <td><%= link_to 'Add department',new_superadmin_company_department_path(c), class:'btn btn-outline-info btn-sm', style: 'font-size:smaller' %></td>
-        <td><%= link_to 'Show department',superadmin_company_departments_path(c), class:'btn btn-outline-dark btn-sm', style: 'font-size:smaller' %></td>
+        <td><%= company.id %></td>
+        <td><%= company.name %></td>
+        <td><%= company.email %></td>
+        <td><%= company.website %></td>
+        <!--below rails decorator is used -->
+        <td><%= company.show_link %></td>
+        <td><%= company.edit_link %></td>
+        <td><%= company.delete_link %></td>
+        <td><%= company.add_department %></td>
+        <td><%= company.show_department %></td>
       </tr>
     <% end %>
   </tbody>
