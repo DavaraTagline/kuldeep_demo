@@ -3,6 +3,9 @@
 # This model is for users.
 class User < ApplicationRecord
   rolify
+  include Discard::Model
+  extend FriendlyId
+  friendly_id :slug_candidates, use: [:slugged, :finders] 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -30,6 +33,23 @@ class User < ApplicationRecord
     end
   end
   
+  def slug_candidates
+    [
+      :name,
+      [:name, :gender]
+    ]
+  end
+
+  def should_generate_new_friendly_id?
+    name_changed?
+  end
+
+  def slug=(value)
+    if value.present?
+      write_attribute(:slug, value)
+    end
+  end
+
   def assign_default_role
     add_role(:employee)
   end

@@ -71,7 +71,16 @@
         <div class="col-sm-3 add">
           <%= link_to_add_association 'Add', f, :accountdetails, class:'btn btn-primary add' %>
         </div>
+  </div>
+
+  <% if @user.discarded? %>
+    <div class="form-group row">
+        <%= f.label :restore, class:"col-sm-2 col-form-label" %>
+        <div class="col-sm-8">
+        <%= check_box_tag :restore %>
+        </div>
     </div>
+  <% end %>
 
   <div class="actions">
     <%= f.submit "Update", class:"btn btn-info btn-sm" %>

@@ -4,10 +4,10 @@
 module Superadmin
   # This controller is for SuperadminUser
   class UsersController < ApplicationController
+    load_and_authorize_resource param_method: :superadmin_params
     before_action :authenticate_user!
     before_action :restrict_user
     before_action :set_superadmin_user, only: %i[show edit update destroy]
-    load_and_authorize_resource param_method: :superadmin_params
     def index
       @users = User.left_joins(:roles,:state,:city,:company).select("users.*, states.name as state_name, cities.name as city_name, companies.name as company_name").employee_and_admin_users
     end
@@ -33,6 +33,7 @@ module Superadmin
     def edit; end
 
     def update
+      @user.undiscard if params.dig(:restore)
       if @user.update(superadmin_params)
         redirect_to superadmin_users_path, notice: 'updated succesfully'
       else
@@ -41,7 +42,11 @@ module Superadmin
     end
 
     def destroy
-      @user.destroy
+      if @user.discarded?
+        @user.destroy
+      else
+        @user.discard
+      end
       redirect_to superadmin_users_path
     end
 
