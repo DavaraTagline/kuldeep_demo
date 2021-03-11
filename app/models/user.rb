@@ -17,11 +17,8 @@ class User < ApplicationRecord
   belongs_to :department, optional: true
   has_many :accountdetails, inverse_of: :user
   accepts_nested_attributes_for :accountdetails, allow_destroy: true
-  validates :name, presence: true
-  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
-  validates :email, presence: true, format: {with: VALID_EMAIL_REGEX }
-  validates :phone, presence: true
-  validates :gender, presence: true
+  validates :name, :phone, :gender, presence: true
+  validates :email, presence: true, format: {with: URI::MailTo::EMAIL_REGEXP }
   scope :employee_and_admin_users, -> { where(roles: { name: %w[employee admin] }) }
   scope :employee_users, -> { where(roles: { name: 'employee' }) }
 
