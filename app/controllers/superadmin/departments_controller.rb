@@ -3,7 +3,7 @@ module Superadmin
         before_action :set_department, only: %i[show edit update destroy]
 
         def index
-            @departments = Department.where(company_id: params[:company_id])
+            @departments = Department.where(company_id: params[:company_id]).decorate
             @company = Company.find_by(id: params[:company_id])
         end
 
