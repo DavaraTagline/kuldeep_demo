@@ -6,6 +6,8 @@
     <p><b>Gender:</b><%= @user.gender%></p>
     <p><b>State:</b><%= @user.state_name%></p>
     <p><b>City:</b><%= @user.city_name%></p>
+    <!--below rails decorator is used -->
+    <p><b>Created_at:</b><%= user.formatted_created_at%></p>
     <p><b>Accountdetails:</b>
         <div class="row m-2">
             <% @accountdetails.each do |account_detail| %>

@@ -46,3 +46,4 @@ package.json
 .browserslistrc
 .gitattributes
 .ruby-version
+/config/credentials/test.key
