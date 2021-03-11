@@ -8,8 +8,9 @@ module Superadmin
     before_action :restrict_user
     before_action :set_superadmin_user, only: %i[show edit update destroy]
     load_and_authorize_resource param_method: :superadmin_params
+    decorates_assigned :user
     def index
-      @users = User.left_joins(:roles,:state,:city,:company).select("users.*, states.name as state_name, cities.name as city_name, companies.name as company_name").employee_and_admin_users
+      @users = User.left_joins(:roles,:state,:city,:company).select("users.*, states.name as state_name, cities.name as city_name, companies.name as company_name").employee_and_admin_users.decorate
     end
 
     def show
