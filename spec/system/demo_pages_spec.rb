@@ -15,41 +15,33 @@ RSpec.describe "DemoPages", type: :system do
     it "as superadmin" do
       visit "/"
       click_link "Log in"
-      visit new_user_session_path
       fill_in "Email", with: "superadmin@gmail.com"
       fill_in "Password", with: "superadmin123"
       click_button "Log in"
-      visit superadmin_users_path
       expect(page).to have_content('User details')
     end
 
     it "as admin" do
       visit "/"
       click_link "Log in"
-      visit new_user_session_path
       fill_in "Email", with: "admin@gmail.com"
       fill_in "Password", with: "admin123"
       click_button "Log in"
-      visit admin_users_path
       expect(page).to have_content('Employee details')
     end
 
     it "as Employee" do
       visit "/"
       click_link "Log in"
-      visit new_user_session_path
       fill_in "Email", with: "employee@gmail.com"
       fill_in "Password", with: "employee123"
       click_button "Log in"
-      user = User.find_by(email:'employee@gmail.com')
-      visit employee_user_path(user)
       expect(page).to have_content('employee@gmail.com')
     end
     
     it "when email and password is blank" do
       visit '/'
       click_link "Log in"
-      visit new_user_session_path
       click_button "Log in"
       expect(page).to have_content("Invalid Email or password.")
     end
@@ -58,7 +50,6 @@ RSpec.describe "DemoPages", type: :system do
   it "sign up user" do
     visit '/'
     click_link "Sign up"
-    visit new_user_registration_path
     fill_in "Name", with: "test"
     fill_in "Email", with: "test@gmail.com"
     fill_in "Phone", with: '4567891231'
@@ -68,8 +59,7 @@ RSpec.describe "DemoPages", type: :system do
     fill_in "Password", with: '1234567'
     fill_in "Password confirmation", with: '1234567'
     click_button 'Sign up'
-    user = User.last
-    visit employee_user_path(user)
+    expect(page).to have_content('Welcome! You have signed up successfully.')
     within('.container') do
       expect(page).to have_text('test')
     end 

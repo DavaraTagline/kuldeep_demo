@@ -1,9 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe Superadmin::CompaniesController, type: :controller do
+    let(:super_admin) { create(:superadmin_user) }
+    let(:company) { create(:company) }
+
     before(:each) do
-        @super_admin = Role.find_by(name: 'superadmin').users.last
-        sign_in @super_admin
+        sign_in(super_admin) 
     end
 
     context "for render" do
@@ -18,8 +20,7 @@ RSpec.describe Superadmin::CompaniesController, type: :controller do
         end
 
         it "should render edit page" do
-            @company = Company.find_by(name:'test')
-            get :edit, params: {id: @company.id}
+            get :edit, params: {id: company.id}
             expect(response).to render_template(:edit)
         end
     end
@@ -39,31 +40,28 @@ RSpec.describe Superadmin::CompaniesController, type: :controller do
 
     context "for GET#show" do
         it "should show company" do
-            @company = Company.find_by(name:'test')
-            get :show, params: { id: @company.id}
+            get :show, params: { id: company.id}
             expect(response).to render_template(:show)
         end
     end
 
     context "for PUT#update" do
         it "should update company" do
-            @company = Company.find_by(name:'test')
-            put :update, params: { id: @company.id, company: { name: 'updated_test'} }
+            put :update, params: { id: company.id, company: { name: 'updated_test'} }
             #expect(response).to redirect_to superadmin_companies_path
             expect(Company.last.name).to eq("updated_test")
         end
 
         it "should not update company when params is not valid" do
-            @company = Company.find_by(name:'test')
-            put :update, params: { id: @company.id, company: { name: ' '} }
+            put :update, params: { id: company.id, company: { name: ' '} }
             expect(response).to render_template(:edit)
         end
     end
 
     context "for DELETE#destroy" do
         it "should delete company" do
-            @company = Company.find_by(name:'test')
-            expect{ delete :destroy, params: { id: @company.id } }.to change { Company.count }.by(-1)
+            company
+            expect{ delete :destroy, params: { id: company.id } }.to change { Company.count }.by(-1)
             expect(response).to redirect_to superadmin_companies_path
         end
     end
