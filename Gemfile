@@ -27,6 +27,8 @@ gem 'bullet'
 gem 'cancancan'
 gem 'cocoon'
 gem 'devise', github: 'heartcombo/devise', branch: 'ca-omniauth-2'
+gem 'discard', '~> 1.2'
+gem 'friendly_id', '~> 5.4.0'
 gem 'omniauth-google-oauth2'
 gem 'omniauth-facebook'
 gem "omniauth-rails_csrf_protection"

@@ -11,6 +11,7 @@
         <th scope="col">Company</th>
         <th scope="col">State</th>
         <th scope="col">City</th>
+        <th scope="col">Discarded</th>
         <th scope="col" colspan=3, class="text-center" >Action</th>
       </tr>
       </tr>
@@ -26,10 +27,10 @@
           <td><%= user.company_name %></td>
           <td><%= user.state_name %></td>
           <td><%= user.city_name %></td>
-          <!--below rails decorator is used -->
-          <td><%= user.show_link %></td>
-          <td><%= user.edit_link %></td>
-          <td><%= user.delete_link %></td>
+          <td><%= user.discarded? ? 'Yes' : 'No' %></td>
+          <td><%= link_to 'show', superadmin_user_path(user), class:'btn btn-outline-primary btn-sm' %></td>
+          <td><%= link_to 'Edit', edit_superadmin_user_path(user), class:'btn btn-outline-secondary btn-sm' %></td>
+          <td><%= link_to 'Destroy', superadmin_user_path(user), method: :delete, data: { confirm: 'Are you sure?'}, class:'btn btn-outline-danger btn-sm' %></td>  
         </tr>
       <% end %>
     </tbody>

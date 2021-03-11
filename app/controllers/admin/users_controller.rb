@@ -8,7 +8,7 @@ module Admin
     before_action :restrict_user
     load_and_authorize_resource param_method: :admin_params
     def index
-      @users = User.left_joins(:roles,:state,:city,:company).select("users.*, states.name as state_name, cities.name as city_name, companies.name as company_name").employee_users
+      @users = User.left_joins(:roles,:state,:city,:company).select("users.*, states.name as state_name, cities.name as city_name, companies.name as company_name").employee_users.kept
     end
 
     def show
