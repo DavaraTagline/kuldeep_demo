@@ -1,0 +1,62 @@
+<script src="https://www.paypal.com/sdk/js?client-id=ATo1jjt5yfmpCVAJaz1Zvc8Z_4xFdRpxQFRzMD0H_CESW3YL293JakyrIIRXRtf6rbdYZ-19cb3bF_xc"></script>
+<div class="container">
+    <h1>Choose Membership</h1>
+    <%= form_with do |f| %>
+        <fieldset class="form-group">
+            <div class="row mt-3">
+                <%= f.label :price,class:"col-sm-2 col-form-label" %>
+                <div class="col-sm-8 pymt_prc">
+                    <%= f.radio_button(:price, "100", class: 'payment_price') %>
+                    <%= label(:price, "100") %>
+                </div>
+            </div>
+        </fieldset>
+    <% end %>
+    <div class="col-3">
+        <div id="paypal-button-container"></div>
+    </div>
+<%= link_to "Back", superadmin_users_path %>
+</div>
+
+<script>  
+    $("input[class='payment_price']").on("change",function(){
+        price  = $("input[class='payment_price']:checked").val();
+        paypal.Buttons({
+           style: {
+            layout:  'vertical',
+            color:   'gold',
+            shape:   'pill',
+            label:   'paypal'
+                },
+            env: 'sandbox', // Valid values are sandbox and live.
+
+            createOrder: async () => {
+                const response = await fetch('/create_order?price='+price, {method: 'POST'});
+                const responseData = await response.json();
+                return responseData.token;
+            },
+
+            onApprove: async (data,actions) => {
+                const response = await fetch('/capture_order', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                    body: JSON.stringify({order_id: data.orderID})
+                });
+                const responseData = await response.json();
+
+                if(responseData.error === 'INSTRUMENT_DECLINED'){
+                    return actions.restart();
+                }
+
+                if (responseData.status === 'COMPLETED') {
+                    $('#paypal-button-container').hide();
+                    alert('Payment done Sucessfully!');
+                    $('input:radio[name="price"]').prop('checked', false);
+                }
+            }
+        }).render('#paypal-button-container');
+        $("input[class='payment_price']").off();     
+    })
+</script>

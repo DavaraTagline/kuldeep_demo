@@ -33,6 +33,7 @@ gem 'omniauth-google-oauth2'
 gem 'omniauth-facebook'
 gem "omniauth-rails_csrf_protection"
 gem 'jwt'
+gem 'paypal-checkout-sdk'
 gem 'rolify'
 gem 'rubocop', require: false
 gem 'draper'
