@@ -11,7 +11,11 @@ module Superadmin
     decorates_assigned :user
 
     def index
-      @users = User.left_joins(:roles,:state,:city,:company).select("users.*, states.name as state_name, cities.name as city_name, companies.name as company_name").employee_and_admin_users.decorate
+      if params[:search]
+        @users = User.search(params[:search])
+      else
+        @users = User.add_extra.employee_and_admin_users.decorate
+      end
     end
 
     def show

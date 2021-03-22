@@ -342,9 +342,8 @@ DEPENDENCIES
   discard (~> 1.2)
   draper
   factory_bot_rails
+  faraday
   friendly_id (~> 5.4.0)
-  graphiql-rails
-  graphql
   jbuilder (~> 2.7)
   jwt
   launchy
