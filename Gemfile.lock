@@ -127,6 +127,10 @@ GEM
       activerecord (>= 4.0.0)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
+    graphiql-rails (1.7.0)
+      railties
+      sprockets-rails
+    graphql (1.12.6)
     hashie (4.1.0)
     i18n (1.8.9)
       concurrent-ruby (~> 1.0)
@@ -339,6 +343,8 @@ DEPENDENCIES
   draper
   factory_bot_rails
   friendly_id (~> 5.4.0)
+  graphiql-rails
+  graphql
   jbuilder (~> 2.7)
   jwt
   launchy
