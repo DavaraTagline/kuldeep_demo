@@ -35,4 +35,7 @@ Rails.application.routes.draw do
       resources :users, except: %i[new edit]
     end
   end
+  resources :memberships, only: %i[new]
+  post :create_order, to: 'memberships#create_order'
+  post :capture_order, to: 'memberships#capture_order'
 end
