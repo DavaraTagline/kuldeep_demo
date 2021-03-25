@@ -26,7 +26,9 @@ Rails.application.routes.draw do
   end
 
   namespace :superadmin do
-    resources :users
+    resources :users do
+      collection { post :import }
+    end
     resources :companies do
       resources :departments
     end

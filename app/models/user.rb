@@ -71,7 +71,38 @@ class User < ApplicationRecord
   end
 
   def self.search(search)
-    User.add_extra.where("users.name LIKE '%#{search}%'")
+    User.add_extra.employee_and_admin_users.where("users.name LIKE ?", "%#{search}%" )
   end
 
+  def self.to_csv(users)
+    attributes = %w{id name email phone gender company state city }
+    CSV.generate do |csv|
+      csv << attributes
+      users.each do |result|
+        csv << [result.id, result.name, result.email, result.phone, result.gender, result.company_name, result.state_name, result.city_name]
+      end
+    end
+  end
+
+  def self.import(file)
+    result = []
+    valid_result = []
+    i = 1
+    CSV.foreach(file.path, headers: true) do |row|
+      user = User.new row.to_h
+      if user.valid?
+        valid_result << user
+        i += 1
+      else
+        result << user.errors.full_messages
+        result << i
+        return result
+      end
+    end
+    valid_result.each do |elem|
+      elem.save
+    end
+    result << "success"
+    return result
+  end 
 end

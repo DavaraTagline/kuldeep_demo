@@ -14,7 +14,25 @@ module Superadmin
       if params[:search]
         @users = User.search(params[:search])
       else
-        @users = User.add_extra.employee_and_admin_users.decorate
+        @users = User.add_extra.employee_and_admin_users.decorate.order(:id)
+      end
+      respond_to do |format|
+        format.html
+        format.js
+        #format.csv { send_data @users.to_csv, filename: "users-#{Date.today}.csv" }
+        format.csv do
+          #headers['Content-Type'] ||= 'text/csv'
+          send_data User.to_csv(@users), filename: "users-#{Date.today}.csv"
+        end
+      end
+    end
+
+    def import
+      result = User.import(params[:file])
+      if result.include? 'success'
+        redirect_to superadmin_users_path, notice: "Successfully imported!"
+      else
+        redirect_to superadmin_users_path, alert: "#{result[0].join(",")} in #{result[-1].ordinalize} row of  CSV file"
       end
     end
 
