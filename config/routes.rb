@@ -26,7 +26,9 @@ Rails.application.routes.draw do
   end
 
   namespace :superadmin do
-    resources :users
+    resources :users do
+      collection { post :import }
+    end
     resources :companies do
       resources :departments
     end
@@ -42,4 +44,8 @@ Rails.application.routes.draw do
   resources :memberships, only: %i[new]
   post :create_order, to: 'memberships#create_order'
   post :capture_order, to: 'memberships#capture_order'
+
+  get '/users', to: 'posts#users'
+  post 'users/:id/posts', to: 'posts#save_post'
+  post 'users/:id/post', to: 'posts#create_post'
 end

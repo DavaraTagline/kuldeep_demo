@@ -16,11 +16,13 @@ class User < ApplicationRecord
   belongs_to :company, optional: true
   belongs_to :department, optional: true
   has_many :accountdetails, inverse_of: :user
+  has_many :posts, dependent: :destroy
   accepts_nested_attributes_for :accountdetails, allow_destroy: true
   validates :name, :phone, :gender, presence: true
   validates :email, presence: true, format: {with: URI::MailTo::EMAIL_REGEXP }
   scope :employee_and_admin_users, -> { where(roles: { name: %w[employee admin] }) }
   scope :employee_users, -> { where(roles: { name: 'employee' }) }
+  scope :add_extra, -> { left_joins(:roles,:state,:city,:company).select("users.*, states.name as state_name, cities.name as city_name, companies.name as company_name") }
 
   def generate_jwt
     JWT.encode({ id: id, exp: 24.hours.from_now.to_i }, Rails.application.secrets.secret_key_base)
@@ -67,4 +69,40 @@ class User < ApplicationRecord
   def superadmin?
     has_role?(:superadmin)
   end
+
+  def self.search(search)
+    User.add_extra.employee_and_admin_users.where("users.name LIKE ?", "%#{search}%" )
+  end
+
+  def self.to_csv(users)
+    attributes = %w{id name email phone gender company state city }
+    CSV.generate do |csv|
+      csv << attributes
+      users.each do |result|
+        csv << [result.id, result.name, result.email, result.phone, result.gender, result.company_name, result.state_name, result.city_name]
+      end
+    end
+  end
+
+  def self.import(file)
+    result = []
+    valid_result = []
+    i = 1
+    CSV.foreach(file.path, headers: true) do |row|
+      user = User.new row.to_h
+      if user.valid?
+        valid_result << user
+        i += 1
+      else
+        result << user.errors.full_messages
+        result << i
+        return result
+      end
+    end
+    valid_result.each do |elem|
+      elem.save
+    end
+    result << "success"
+    return result
+  end 
 end
